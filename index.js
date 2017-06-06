@@ -21,18 +21,13 @@
 
 const express = require('express');
 const fs = require('mz/fs');
-const handlebars = require('handlebars');
+const dot = require('dot');
+dot.templateSettings.strip = false;
+
 const crypto = require('crypto');
 
-// Handlebars `if` only checks for truthy and falsy values,
-// so we have to write our own helper to check for equality (or inequality).
-handlebars.registerHelper('ifNotEq', function (a, b, opts) {
-  if (a !== b) {
-    return opts.fn(this);
-  }
-});
-
 const app = express();
+app.use('/node_modules', express.static('node_modules'));
 // Matches paths like `/`, `/index.html`, `/about/` or `/about/index.html`.
 const toplevelSection = /([^/]*)(\/|\/index.html)$/;
 app.get(toplevelSection, (req, res) => {
@@ -54,7 +49,7 @@ app.get(toplevelSection, (req, res) => {
 
   Promise.all(files)
   .then(files => files.map(f => f.toString('utf-8')))
-  .then(files => files.map(f => handlebars.compile(f)(req)))
+  .then(files => files.map(f => dot.template(f)(req)))
   .then(files => {
     const content = files.join('');
     // Let's use sha256 as a means to get an ETag

@@ -12,11 +12,10 @@
   },
   "dependencies": {
     "actions-on-google": "^1.1.1",
-    "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "hbs": "^4.0.1",
+    "dot": "^1.0.3",
     "mongoose": "^4.10.4",
-    "mz": "^2.4.0"
+    "mz": "^2.6.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

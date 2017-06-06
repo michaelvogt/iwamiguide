@@ -15,14 +15,11 @@ limitations under the License.
 <head>
   <meta charset="utf-8">
   <meta name="author" content="Paul Lewis" />
+  <meta name="author" content="Michael Vogt" />
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <meta name="theme-color" content="#FF00FF">
-  <title>Router</title>
+  <title>Iwami Guide</title>
   <link rel="stylesheet" href="/static/superstyles.css">
-  <link rel="preload" href="/">
-  <link rel="preload" href="/about/">
-  <link rel="preload" href="/contact/">
-  <link rel="preload" href="/misc/">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
   <nav>
@@ -34,15 +31,15 @@ limitations under the License.
     </ul>
   </nav>
 
-  {{#ifNotEq item ""}}
+  {{? it.item !== ""}}
   <sc-view remote class="view-home" route="^/$"></sc-view>
-  {{/ifNotEq}}
-  {{#ifNotEq item "about"}}
+  {{?}}
+  {{? it.item !== "about"}}
   <sc-view remote class="view-about" route="^/about/(.*)"></sc-view>
-  {{/ifNotEq}}
-  {{#ifNotEq item "contact"}}
+  {{?}}
+  {{? it.item !== "contact"}}
   <sc-view remote class="view-contact" route="^/contact/(.*)"></sc-view>
-  {{/ifNotEq}}
-  {{#ifNotEq item "misc"}}
+  {{?}}
+  {{? it.item !== "misc"}}
   <sc-view remote class="view-misc" route="^/misc/(.*)"></sc-view>
-  {{/ifNotEq}}
+  {{?}}
