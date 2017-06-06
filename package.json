@@ -1,0 +1,37 @@
+{
+  "name": "IwamiGuide",
+  "version": "0.0.2",
+  "private": true,
+  "description": "Guide for Iwami Ginzan",
+  "author": "Michael Vogt",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devstart": "nodemon ./bin/www",
+    "lint": "eslint *.js"
+  },
+  "dependencies": {
+    "actions-on-google": "^1.1.1",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "hbs": "^4.0.1",
+    "mongoose": "^4.10.4",
+    "mz": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.8.0"
+  },
+  "engines": {
+    "node": "6.10.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/welcome-project"
+  },
+  "license": "Apache Version 2.0",
+  "keywords": [
+    "World Heritage",
+    "Iwami Ginzan",
+    "Guide"
+  ]
+}

@@ -1,2 +1,3 @@
-# iwamiguide
-Sample Iwami Ginzan guide
+Welcome to the Iwami Ginzan Guide sample
+========================================
+
