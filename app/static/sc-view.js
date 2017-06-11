@@ -35,34 +35,38 @@ class SCView extends HTMLElement {
   _showSpinner () {
     this.classList.add('pending');
   }
-
-  _loadView (data) {
-    // Wait for half a second then show the spinner.
-    const spinnerTimeout = setTimeout(_ => this._showSpinner(), 500);
-
-    this._view = new DocumentFragment();
-    const xhr = new XMLHttpRequest();
-
-    xhr.onload = evt => {
-      const newDoc = evt.target.response;
-      const newView = newDoc.querySelector('sc-view.visible');
-
-      // Copy in the child nodes from the parent.
-      newView.childNodes.forEach(node => {
-        this._view.appendChild(node);
-      });
-
-      // Add the fragment to the page.
-      this.appendChild(this._view);
-
-      // Clear the timeout and remove the spinner if needed.
-      clearTimeout(spinnerTimeout);
-      this._hideSpinner();
-    };
-    xhr.responseType = 'document';
-    xhr.open('GET', `${data[0]}?partial=`);
-    xhr.send();
+    
+  _logError( error) {
+      console.log( 'Looks like there was a problem: \n', error);
   }
+  
+  _validateResponse(response) {
+      if (!response.ok) {
+          throw Error( response.statusText);
+      }
+      return response;
+  }
+  
+  _responseAsText(response) {
+      return response.text();
+  }
+
+  _loadView( data) {
+      // Wait for half a second then show the spinner.
+      const spinnerTimeout = setTimeout( _ => this._showSpinner(), 500);
+
+      fetch( `${data[0]}?partial=`)
+          .then( this._verifyResponse)
+          .then( this._responseAsText)
+          .then( (text) => {
+              this.innerHTML = text;
+
+              // Clear the timeout and remove the spinner if needed.
+              clearTimeout( spinnerTimeout);
+              this._hideSpinner();
+          })
+          .catch( this._logError);
+      }
 
   in (data) {
     if (this._isRemote && !this._view) {

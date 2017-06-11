@@ -13,8 +13,7 @@ const ASSETS = [
   '/static/sc-router.js',
   '/static/superstyles.css',
 
-  '/header.partial.html',
-  '/footer.partial.html'
+  '/layout.html',
 ];
 
 // On install, load all our assets into a 'static' cache
@@ -64,16 +63,20 @@ function buildSite(event) {
   event.respondWith(async function () {
     // Get our 3 fragments for the response. Header, content and footer.
     const files = await Promise.all([
-      !isPartial ? caches.match('/header.partial.html') : new Response(null),
       staleWhileRevalidateWrapper(event.parsedUrl.toString(), myWaitUntil),
-      !isPartial ? caches.match('/footer.partial.html') : new Response(null)
+      !isPartial ? caches.match('layout.html') : new Response(null)
     ]);
     // All of those are Response objects. Grab the file contents as strings.
     const contents = await Promise.all(files.map(f => f.text()));
-    // ... and concatenate them.
-    const content = contents.join('');
     // Compile the template
-    const template = doT.template(content);
+    let template;
+    if (isPartial) {
+        template = doT.template(contents[0]);      
+    } else {
+        template = doT.template(contents[1]);
+        // add the content to the request
+        event.request.pageContent = contents[0];
+    }
     // ... and execute the template as the body of the response
     return new Response(template(event.request), {headers: {'Content-Type': 'text/html'}});
   }());

@@ -38,20 +38,27 @@ app.get(toplevelSection, (req, res) => {
   // If the request has `?partial`, don't render header and footer.
   let files;
   if ('partial' in req.query) {
-    files = [fs.readFile(`app/${req.item}/index.html`)];
+    files = [
+      fs.readFile(`app/${req.item}/index.html`)
+    ];
   } else {
     files = [
-      fs.readFile('app/header.partial.html'),
       fs.readFile(`app/${req.item}/index.html`),
-      fs.readFile('app/footer.partial.html')
+      fs.readFile('app/layout.html')
     ];
   }
 
   Promise.all(files)
   .then(files => files.map(f => f.toString('utf-8')))
-  .then(files => files.map(f => dot.template(f)(req)))
   .then(files => {
-    const content = files.join('');
+     if ('partial' in req.query) {
+        return dot.template(files[0])(req);
+     }
+    
+     req.pageContent = files[0];
+     return dot.template(files[1])(req);
+  })
+  .then(content => {
     // Let's use sha256 as a means to get an ETag
     const hash = crypto
                   .createHash('sha256')
@@ -66,6 +73,6 @@ app.get(toplevelSection, (req, res) => {
   })
   .catch(error => res.status(500).send(error.toString()));
 });
-app.use(express.static('app'));
 
+app.use(express.static('app'));
 app.listen(process.env.PORT || 3000);

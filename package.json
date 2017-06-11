@@ -6,15 +6,15 @@
   "author": "Michael Vogt",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --inspect index.js",
     "devstart": "nodemon ./bin/www",
     "lint": "eslint *.js"
   },
   "dependencies": {
     "actions-on-google": "^1.1.1",
     "express": "^4.15.3",
-    "dot": "^1.0.3",
-    "mongoose": "^4.10.4",
+    "dot": "^1.1.2",
+    "mongoose": "^4.10.5",
     "mz": "^2.6.0"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
     "eslint-config-google": "^0.8.0"
   },
   "engines": {
-    "node": "6.10.x"
+    "node": "8.x.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/welcome-project"
