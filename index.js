@@ -31,47 +31,47 @@ app.use('/node_modules', express.static('node_modules'));
 // Matches paths like `/`, `/index.html`, `/about/` or `/about/index.html`.
 const toplevelSection = /([^/]*)(\/|\/index.html)$/;
 app.get(toplevelSection, (req, res) => {
-  // Extract the menu item name from the path and attach it to
-  // the request to have it available for template rendering.
-  req.item = req.params[0];
+    // Extract the menu item name from the path and attach it to
+    // the request to have it available for template rendering.
+    req.item = req.params[0];
 
-  // If the request has `?partial`, don't render header and footer.
-  let files;
-  if ('partial' in req.query) {
-    files = [
-      fs.readFile(`app/${req.item}/index.html`)
-    ];
-  } else {
-    files = [
-      fs.readFile(`app/${req.item}/index.html`),
-      fs.readFile('app/layout.html')
-    ];
-  }
+    // If the request has `?partial`, don't render header and footer.
+    let files;
+    if ('partial' in req.query) {
+        files = [
+            fs.readFile(`app/${req.item}/index.html`),
+        ];
+    } else {
+        files = [
+            fs.readFile(`app/${req.item}/index.html`),
+            fs.readFile('app/layout.html'),
+        ];
+    }
 
-  Promise.all(files)
-  .then(files => files.map(f => f.toString('utf-8')))
-  .then(files => {
-     if ('partial' in req.query) {
-        return dot.template(files[0])(req);
-     }
-    
-     req.pageContent = files[0];
-     return dot.template(files[1])(req);
-  })
-  .then(content => {
-    // Let's use sha256 as a means to get an ETag
-    const hash = crypto
-                  .createHash('sha256')
-                  .update(content)
-                  .digest('hex');
+    Promise.all(files)
+    .then( (files) => files.map( (f) => f.toString('utf-8')))
+    .then( (files) => {
+        if ( 'partial' in req.query) {
+            return dot.template( files[0])( req);
+        }
 
-    res.set({
-      'ETag': hash,
-      'Cache-Control': 'public, no-cache'
-    });
-    res.send(content);
-  })
-  .catch(error => res.status(500).send(error.toString()));
+        req.pageContent = files[0];
+        return dot.template( files[1])( req);
+    })
+    .then( (content) => {
+        // Let's use sha256 as a means to get an ETag
+        const hash = crypto
+            .createHash('sha256')
+            .update(content)
+            .digest('hex');
+
+        res.set({
+            'ETag': hash,
+            'Cache-Control': 'public, no-cache',
+        });
+        res.send( content);
+    })
+    .catch( (error) => res.status(500).send(error.toString()));
 });
 
 app.use(express.static('app'));
