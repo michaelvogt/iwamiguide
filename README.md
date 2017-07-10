@@ -1,4 +1,4 @@
- 日本語版は下記です
+[日本語版は下記です] (https://github.com/michaelvogt/iwamiguide/blob/master/README.md#石見銀山-ar-アプリ-企画)
 
 # Iwami Ginzan AR app proposal
 2017.07.05
