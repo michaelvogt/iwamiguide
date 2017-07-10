@@ -61,7 +61,7 @@ Some areas are restricted or inaccessible. To allow visitor still get to know th
 
 ー
 
-石見銀山 AR アプリ 企画
+# 石見銀山 AR アプリ 企画
 2017.07.09
 
 Michael Vogt
