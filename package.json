@@ -1,0 +1,44 @@
+{
+  "name": "IwamiGuide",
+  "version": "0.0.2",
+  "private": false,
+  "description": "Guide for Iwami Ginzan",
+  "author": "Michael Vogt",
+  "main": "index.js",
+  "flat": true,
+  "scripts": {
+    "start": "node --inspect index.js",
+    "devstart": "nodemon ./bin/www",
+    "lint": "eslint *.js"
+  },
+  "dependencies": {
+    "actions-on-google": "^1.1.1",
+    "dot": "^1.1.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.5",
+    "mz": "^2.6.0"
+  },
+  "devDependencies": {
+    "del": "^3.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.8.0",
+    "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-uglify": "^3.0.0",
+    "gulp-useref": "^3.1.2",
+    "path": "^0.12.7",
+    "run-sequence": "^1.2.2",
+    "sw-precache": "^5.2.0",
+    "sw-toolbox": "^3.6.0"
+  },
+  "engines": {
+    "node": "8.x.x"
+  },
+  "repository": "https://github.com/michaelvogt/iwamiguide.git",
+  "license": "GPL-3.0",
+  "keywords": [
+    "World Heritage",
+    "Iwami Ginzan",
+    "Guide"
+  ]
+}
