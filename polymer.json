@@ -1,0 +1,31 @@
+{
+  "entrypoint": "index.html",
+  "shell": "layout.html",
+  "fragments": [
+    "about/index.html",
+    "contact/index.html",
+    "misc/index.html",
+    "error/404.html"
+  ],
+  "sources": [
+    "static/**/*"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "node_modules/@webcomponents/webcomponentsjs/*.js"
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  },
+  "builds": [
+    {
+      "preset": "es5-bundled"
+    },
+    {
+      "preset": "es6-bundled"
+    },
+    {
+      "preset": "es6-unbundled"
+    }
+  ]
+}
