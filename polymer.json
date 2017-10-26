@@ -1,6 +1,6 @@
 {
-  "entrypoint": "index.html",
-  "shell": "layout.html",
+  "entrypoint": "app/layout.html",
+  "shell": "app/layout.html",
   "fragments": [
     "about/index.html",
     "contact/index.html",
