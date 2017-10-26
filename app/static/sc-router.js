@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 class SCRouter extends HTMLElement {
 
   _onChanged () {

@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 class SCView extends HTMLElement {
 
   createdCallback () {

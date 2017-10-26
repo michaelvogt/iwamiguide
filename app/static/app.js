@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 class App {
   constructor () {
     const router = document.querySelector('sc-router');
@@ -36,7 +34,7 @@ class App {
 (_ => new App())();
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js', {scope: '/'});
+  // navigator.serviceWorker.register('/service-worker.js', {scope: '/'});
 }
 
 function goOffline() {
@@ -48,6 +46,7 @@ function goOffline() {
       .then(resp => link.classList.toggle('cached', !!resp));
   });
 }
+
 window.addEventListener('offline', _ => goOffline());
 window.addEventListener('online', _ => document.body.classList.remove('offline'));
 navigator.onLine || goOffline();

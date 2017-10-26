@@ -1,0 +1,20 @@
+            {{? it.item !== ""}}
+            <sc-view remote class="view-home" route="^/$"></sc-view>
+            {{??}}
+            <sc-view class="view-home visible" route="^/$">{{= it.pageContent}}</sc-view>
+            {{?}}
+            {{? it.item !== "about"}}
+            <sc-view remote class="view-about" route="^/about/(.*)"></sc-view>
+            {{??}}
+            <sc-view class="view-about visible" route="^/about/(.*)">{{= it.pageContent}}</sc-view>
+            {{?}}
+            {{? it.item !== "contact"}}
+            <sc-view remote class="view-contact" route="^/contact/(.*)"></sc-view>
+            {{??}}
+            <sc-view class="view-contact visible" route="^/contact/(.*)">{{= it.pageContent}}</sc-view>
+            {{?}}
+            {{? it.item !== "misc"}}
+            <sc-view remote class="view-misc" route="^/misc/(.*)"></sc-view>
+            {{??}}
+            <sc-view class="view-misc visible" route="^/misc/(.*)">{{= it.pageContent}}</sc-view>
+            {{?}}

@@ -3,7 +3,7 @@
   "name": "Sample Iwami Guide",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#009613",
+  "background_color": "#001396",
   "theme_color": "#009613",
   "icons": [
     {
@@ -30,6 +30,11 @@
       "src": "https://cdn.glitch.com/a5ca86a6-a28f-4962-8cc2-2a1cbb088957%2Fratochan256.png?1496770113367",
       "type": "image/png",
       "sizes": "256x256"
+    },
+    {
+      "src": "https://cdn.glitch.com/a5ca86a6-a28f-4962-8cc2-2a1cbb088957%2Fratochan512.png?1497348823024",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }
