@@ -22,14 +22,31 @@
 const express = require('express');
 const fs = require('mz/fs');
 const dot = require('dot');
-dot.templateSettings.strip = false;
-
 const crypto = require('crypto');
 
 const app = express();
 app.use('/node_modules', express.static('node_modules'));
+
 // Matches paths like `/`, `/index.html`, `/about/` or `/about/index.html`.
 const toplevelSection = /([^/]*)(\/|\/index.html)$/;
+
+const renderOptions = {
+  useParams:   /(^|[^\w$])def(?:\.|\[[\'\"])([\w$\.]+)(?:[\'\"]\])?\s*\:\s*([\w$\.]+|\"[^\"]+\"|\'[^\']+\'|\{[^\}]+\})/g,
+  defineParams:/^\s*([\w$]+):([\s\S]+)/,
+  varname:	"it",
+  doNotSkipEncoded: false,
+  evaluate: /\[\[([\s\S]+?)]]/g,
+  interpolate: /\[\[=([\s\S]+?)]]/g,
+  encode: /\[\[!([\s\S]+?)]]/g,
+  use: /\[\[#([\s\S]+?)]]/g,
+  define: /\[\[##\s*([\w\.$]+)\s*(:|=)([\s\S]+?)#]]/g,
+  conditional: /\[\[\?(\?)?\s*([\s\S]*?)\s*]]/g,
+  iterate: /\[\[~\s*(?:]]|([\s\S]+?)\s*:\s*([\w$]+)\s*(?::\s*([\w$]+))?\s*]])/g,
+  strip: false,
+  append: true,
+  selfcontained: false
+};
+
 
 app.get(toplevelSection, (req, res) => {
     // Extract the menu item name from the path and attach it to
@@ -52,12 +69,12 @@ app.get(toplevelSection, (req, res) => {
     Promise.all(files)
     .then( (files) => files.map( (f) => f.toString('utf-8')))
     .then( (files) => {
-        if ( 'partial' in req.query) {
-            return dot.template( files[0])( req);
+      if ( 'partial' in req.query) {
+            return dot.template( files[0], renderOptions)(req);
         }
 
         req.pageContent = files[0];
-        return dot.template( files[1])( req);
+        return dot.template( files[1], renderOptions)(req);
     })
     .then( (content) => {
         // Let's use sha256 as a means to get an ETag

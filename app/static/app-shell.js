@@ -1,17 +1,23 @@
-/*
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
+/**
+ * Iwami Ginzan AR, AR tour guide through the world heritage site Iwami Ginzan
+ * Copyright (C) 2017  Michael Vogt
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
 
-import {
-  Element as PolymerElement
-}
-  from "../../node_modules/@polymer/polymer/polymer-element.js"
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+import {Element as PolymerElement} from "../../node_modules/@polymer/polymer/polymer-element.js"
 
 import "../../node_modules/@polymer/app-layout/app-drawer/app-drawer.js";
 import "../../node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js";
@@ -19,24 +25,29 @@ import "../../node_modules/@polymer/app-layout/app-header/app-header.js";
 import "../../node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js";
 import "../../node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js";
 import "../../node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js";
-import "../../node_modules/@polymer/iron-selector/iron-selector.js";
+import "../../node_modules/@polymer/iron-media-query/iron-media-query.js";
+import "../../node_modules/@polymer/iron-icons/iron-icons.js";
+import "../../node_modules/@polymer/paper-listbox/paper-listbox.js";
+import "../../node_modules/@polymer/paper-item/paper-item.js";
+import "../../node_modules/@polymer/paper-tabs/paper-tabs.js";
 import "../../node_modules/@polymer/paper-icon-button/paper-icon-button.js";
+
+import "/static/sc-router.js";
+
 
 // import "./my-icons.js";
 
-export class AppShell extends PolymerElement {
+class AppShell extends PolymerElement {
   constructor() {
     super();
-
-    this._internalizeLinks = this._internalizeLinks.bind(this);
   }
 
   static get template() {
     return `
             <style>
               :host {
-                --app-primary-color: #4285f4;
-                --app-secondary-color: black;
+                --app-primary-color: #20c020;
+                --app-secondary-color: #f09010;
         
                 display: block;
               }
@@ -46,136 +57,112 @@ export class AppShell extends PolymerElement {
               }
         
               app-header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 212px;
                 color: #fff;
                 background-color: var(--app-primary-color);
-              }
-        
+                /* https://bugs.chromium.org/p/chromium/issues/detail?id=637072 */
+                --app-header-background-front-layer: {
+                  background-image: url("/static/media/header.jpg");
+                  background-position: left center;
+                };
+              }      
+                
               app-header paper-icon-button {
-                --paper-icon-button-ink-color: white;
+                --paper-icon-button-ink-color: #333;
               }
-        
-              .drawer-list {
-                margin: 0 20px;
+                              
+              .main-header {
+                box-shadow: 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
               }
-        
-              .drawer-list a {
-                display: block;
-                padding: 0 16px;
-                text-decoration: none;
-                color: var(--app-secondary-color);
-                line-height: 40px;
+              
+              app-toolbar#title-bar {
+                height: 80px;
               }
-        
-              .drawer-list a.iron-selected {
-                color: black;
-                font-weight: bold;
+              
+              app-toolbar#tabs-bar {
+                position: absolute;
+                bottom: 0px;
+                width: 100vw;
+                height: 32px;
+              }
+              
+              paper-tabs {
+                --paper-tabs-selection-bar-color: black;
+                height: 100%;
+                max-width: 640px;
+              }
+              paper-tab {
+                --paper-tab-ink: #aaa;
+                text-transform: uppercase;
+              }
+              
+              [hidden] {
+                display: none !important;
               }
             </style>
         
-            <app-drawer-layout fullbleed narrow="{{narrow}}">
-              <!-- Drawer content -->
-              <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+            <app-drawer-layout id="navmenu" fullbleed>
+              <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">
+          
+                <!-- an empty toolbar in the drawer looks like a
+                     continuation of the main toolbar. It's optional. -->
                 <app-toolbar>Menu</app-toolbar>
-                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-                  <a name="home" href="/">Home</a>
-                  <a name="misc" href="/misc/">Misc</a>
-                  <a name="about" href="/about/">About</a>
-                  <a name="contact" href="/contact/">Contact</a>
-                </iron-selector>
+          
+                <!-- Nav on mobile: side nav menu -->
+                <paper-listbox selected="{{selected}}" attr-for-selected="route">
+                  <paper-item raised name="home" route="/">Home</paper-item>
+                  <paper-item raised name="misc" route="/misc/">Misc</paper-item>
+                  <paper-item raised name="about" route="/about/">About</paper-item>
+                  <paper-item raised name="contact" route="/contact/">Contact</paper-item>
+                </paper-listbox>
               </app-drawer>
         
               <!-- Main content -->
-              <app-header-layout has-scrolling-region>
-        
-                <app-header slot="header" condenses reveals effects="waterfall">
-                  <app-toolbar>
-                    <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-                    <div main-title> 石見銀山ARガイド</div>
+              <app-header-layout>
+                <app-header class="main-header" slot="header" condenses reveals 
+                    effects="waterfall blend-background parallax-background">
+                  <app-toolbar id="title-bar">
+                    <!-- drawer toggle button -->
+                    <paper-icon-button 
+                        class="menu-button" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
+                    <div main-title>石見銀山ARガイド</div>
                   </app-toolbar>
+                  <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
+                    <!-- Nav on desktop: tabs -->
+                    <paper-tabs selected="{{selected}}" attr-for-selected="route" bottom-item scrollable sticky>
+                      <paper-tab raised name="home" route="/">Home</paper-tab>
+                      <paper-tab raised name="misc" route="/misc/">Misc</paper-tab>
+                      <paper-tab raised name="about" route="/about/">About</paper-tab>
+                      <paper-tab raised name="contact" route="/contact/">Contact</paper-tab>
+                    </paper-tabs>
+                  </app-toolbar>
+          
                 </app-header>
-                
+              
                 <slot></slot>
-        
+              
               </app-header-layout>
-            </app-drawer-layout>`
+            </app-drawer-layout>
+          
+            <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
+            <sc-router id="router" selected="{{selected}}"></sc-router>`
   }
 
   static get properties() {
     return {
-      page: {
+      selected: {
         type: String,
-        reflectToAttribute: true,
-        observer: '_pageChanged',
+        notify: true,
+        reflectToAttribute: true
       },
-      routeData: Object,
-      subroute: String,
       // This shouldn't be neccessary, but the Analyzer isn't picking up
       // Polymer.Element#rootPath
       rootPath: String,
     };
-  }
-
-  static get observers() {
-    return [
-      '_routePageChanged(routeData.page)',
-    ];
-  }
-
-  ready() {
-    super.ready();
-    window.requestAnimationFrame(this._internalizeLinks);
-  }
-
-  _internalizeLinks() {
-    const router = document.querySelector('sc-router');
-    const links = Array.from(this.$.drawer.querySelectorAll('a'));
-
-    function onClick (evt) {
-      evt.preventDefault();
-      router.go(evt.target.href);
-    }
-
-    links.forEach(link => {
-      link.addEventListener('click', onClick);
-    });
-  }
-
-  _routePageChanged(page) {
-    // If no page was found in the route data, page will be an empty string.
-    // Default to 'view1' in that case.
-    this.page = page || 'view1';
-
-    // Close a non-persistent drawer when the page & route are changed.
-    if (!this.$.drawer.persistent) {
-      this.$.drawer.close();
-    }
-  }
-
-  _pageChanged(page) {
-    // Load page import on demand. Show 404 page if fails
-    const resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
-
-    /*
-    // Not available in Polymer 3
-    Polymer.importHref(
-        resolvedPageUrl,
-        null,
-        this._showPage404.bind(this),
-        true);
-    */
-
-/*
-    import(`./my-${page}.js`).then((myView1) => {
-      console.log(`My-${page} loaded`);
-      //module.loadPageInto(main);
-    }).catch((reason) => {
-      console.log("MyView1 failed to load", reason);
-    });
-*/
-  }
-
-  _showPage404() {
-    this.page = 'view404';
   }
 }
 

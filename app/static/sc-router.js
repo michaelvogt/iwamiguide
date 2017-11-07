@@ -1,21 +1,61 @@
 /**
+ * Iwami Ginzan AR, AR tour guide through the world heritage site Iwami Ginzan
+ * Copyright (C) 2017  Michael Vogt
  *
- * Copyright 2016 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class SCRouter extends HTMLElement {
+import {Element as PolymerElement} from "../../node_modules/@polymer/polymer/polymer-element.js"
+
+class SCRouter extends PolymerElement {
+  constructor () {
+    super();
+
+    this._onChanged = this._onChanged.bind(this);
+    this._routes = new Map();
+  }
+
+  connectedCallback () {
+    window.addEventListener('popstate', this._onChanged);
+    this._clearRoutes();
+    this._addRoutes();
+    this._onChanged();
+  }
+
+  disconnectedCallback () {
+    window.removeEventListener('popstate', this._onChanged);
+  }
+
+  static get properties() {
+    return {
+      selected: {
+        type: String,
+        notify: true,
+        reflectToAttribute: true
+      },
+    }
+  }
+
+  static get observedAttributes() {return ['selected']; }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    switch (attr) {
+      case 'selected':
+        this.go(newValue);
+    }
+  }
 
   _onChanged () {
     const path = window.location.pathname;
@@ -28,7 +68,7 @@ class SCRouter extends HTMLElement {
     }
 
     // Store the new view.
-    this._newView = this._routes.get(route);
+    this._nextView = this._routes.get(route);
 
     // We don't want to create more promises for the outgoing view animation,
     // because then we get a lot of hanging Promises, so we add a boolean gate
@@ -44,7 +84,7 @@ class SCRouter extends HTMLElement {
     // If there is a current view...
     if (this._currentView) {
       // ...and it's the one we already have, just update it.
-      if (this._currentView === this._newView) {
+      if (this._currentView === this._nextView) {
         // No transitions, so remove the boolean gate.
         this._isTransitioningBetweenViews = false;
 
@@ -61,14 +101,14 @@ class SCRouter extends HTMLElement {
     // outgoing animations to proceed.
     return outViewPromise
       .then(_ => {
-        this._currentView = this._newView;
+        this._currentView = this._nextView;
         this._isTransitioningBetweenViews = false;
-        return this._newView.in(data);
+        return this._nextView.in(data);
       });
   }
 
   go (url) {
-    window.history.pushState(null, null, url);
+    window.history.pushState(null, '', url);
     return this._onChanged();
   }
 
@@ -96,22 +136,6 @@ class SCRouter extends HTMLElement {
   _clearRoutes () {
     this._routes.clear();
   }
-
-  createdCallback () {
-    this._onChanged = this._onChanged.bind(this);
-    this._routes = new Map();
-  }
-
-  attachedCallback () {
-    window.addEventListener('popstate', this._onChanged);
-    this._clearRoutes();
-    this._addRoutes();
-    this._onChanged();
-  }
-
-  detachedCallback () {
-    window.removeEventListener('popstate', this._onChanged);
-  }
 }
 
-document.registerElement('sc-router', SCRouter);
+customElements.define('sc-router', SCRouter);

@@ -13,14 +13,19 @@
   },
   "dependencies": {
     "@polymer/app-layout": "^3.0.0-pre.1",
+    "@polymer/iron-icons": "^3.0.0-pre.1",
+    "@polymer/iron-media-query": "^3.0.0-pre.1",
     "@polymer/iron-selector": "^3.0.0-pre.1",
     "@polymer/paper-icon-button": "^3.0.0-pre.1",
+    "@polymer/paper-item": "^3.0.0-pre.1",
+    "@polymer/paper-listbox": "^3.0.0-pre.1",
+    "@polymer/paper-tabs": "^3.0.0-pre.1",
     "@polymer/polymer": "^3.0.0-pre.1",
     "@webcomponents/webcomponentsjs": "^1.0.17",
     "actions-on-google": "^1.1.1",
     "dot": "^1.1.2",
     "express": "^4.15.3",
-    "mongoose": "^4.10.5",
+    "mongoose": "^4.12.5",
     "mz": "^2.6.0"
   },
   "devDependencies": {

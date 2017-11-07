@@ -57,10 +57,34 @@
     "@polymer/iron-meta" "^3.0.0-pre.1"
     "@polymer/polymer" "^3.0.0-pre.1"
 
+"@polymer/iron-icons@^3.0.0-pre.1":
+  version "3.0.0-pre.1"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-icons/-/iron-icons-3.0.0-pre.1.tgz#3e4b3fd9d1264465225fb89ff2daf171a1e3c37d"
+  dependencies:
+    "@polymer/iron-icon" "^3.0.0-pre.1"
+    "@polymer/iron-iconset-svg" "^3.0.0-pre.1"
+    "@polymer/polymer" "^3.0.0-pre.1"
+
+"@polymer/iron-iconset-svg@^3.0.0-pre.1":
+  version "3.0.0-pre.1"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-iconset-svg/-/iron-iconset-svg-3.0.0-pre.1.tgz#06a03d5796c4280e1fda0edc334de9de1a808f7d"
+  dependencies:
+    "@polymer/iron-meta" "^3.0.0-pre.1"
+    "@polymer/polymer" "^3.0.0-pre.1"
+
 "@polymer/iron-media-query@^3.0.0-pre.1":
   version "3.0.0-pre.1"
   resolved "https://registry.yarnpkg.com/@polymer/iron-media-query/-/iron-media-query-3.0.0-pre.1.tgz#5738c8d741574bd71eb740d2f9f073062d4a8510"
   dependencies:
+    "@polymer/polymer" "^3.0.0-pre.1"
+
+"@polymer/iron-menu-behavior@^3.0.0-pre.1":
+  version "3.0.0-pre.1"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-menu-behavior/-/iron-menu-behavior-3.0.0-pre.1.tgz#68d8974edfe831efab4b1e143a331e918798dc75"
+  dependencies:
+    "@polymer/iron-a11y-keys-behavior" "^3.0.0-pre.1"
+    "@polymer/iron-flex-layout" "^3.0.0-pre.1"
+    "@polymer/iron-selector" "^3.0.0-pre.1"
     "@polymer/polymer" "^3.0.0-pre.1"
 
 "@polymer/iron-meta@^3.0.0-pre.1":
@@ -112,6 +136,24 @@
     "@polymer/paper-styles" "^3.0.0-pre.1"
     "@polymer/polymer" "^3.0.0-pre.1"
 
+"@polymer/paper-item@^3.0.0-pre.1":
+  version "3.0.0-pre.1"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-item/-/paper-item-3.0.0-pre.1.tgz#f90a87424c2bc554995272b59386cc20a9f5d190"
+  dependencies:
+    "@polymer/iron-behaviors" "^3.0.0-pre.1"
+    "@polymer/iron-flex-layout" "^3.0.0-pre.1"
+    "@polymer/paper-styles" "^3.0.0-pre.1"
+    "@polymer/polymer" "^3.0.0-pre.1"
+
+"@polymer/paper-listbox@^3.0.0-pre.1":
+  version "3.0.0-pre.1"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-listbox/-/paper-listbox-3.0.0-pre.1.tgz#4869b64a31487d78efaa734a80eb68002e957cf9"
+  dependencies:
+    "@polymer/iron-behaviors" "^3.0.0-pre.1"
+    "@polymer/iron-menu-behavior" "^3.0.0-pre.1"
+    "@polymer/paper-styles" "^3.0.0-pre.1"
+    "@polymer/polymer" "^3.0.0-pre.1"
+
 "@polymer/paper-ripple@^3.0.0-pre.1":
   version "3.0.0-pre.1"
   resolved "https://registry.yarnpkg.com/@polymer/paper-ripple/-/paper-ripple-3.0.0-pre.1.tgz#67e692ea2c6d91d4f5f5bdf998dbd8a52acd9efa"
@@ -125,6 +167,21 @@
   dependencies:
     "@polymer/font-roboto" "^3.0.0-pre.1"
     "@polymer/iron-flex-layout" "^3.0.0-pre.1"
+    "@polymer/polymer" "^3.0.0-pre.1"
+
+"@polymer/paper-tabs@^3.0.0-pre.1":
+  version "3.0.0-pre.1"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-tabs/-/paper-tabs-3.0.0-pre.1.tgz#c309354b0b45ff241d7fcad88b7c3d857eae8d9d"
+  dependencies:
+    "@polymer/iron-behaviors" "^3.0.0-pre.1"
+    "@polymer/iron-flex-layout" "^3.0.0-pre.1"
+    "@polymer/iron-icon" "^3.0.0-pre.1"
+    "@polymer/iron-iconset-svg" "^3.0.0-pre.1"
+    "@polymer/iron-menu-behavior" "^3.0.0-pre.1"
+    "@polymer/iron-resizable-behavior" "^3.0.0-pre.1"
+    "@polymer/paper-behaviors" "^3.0.0-pre.1"
+    "@polymer/paper-icon-button" "^3.0.0-pre.1"
+    "@polymer/paper-styles" "^3.0.0-pre.1"
     "@polymer/polymer" "^3.0.0-pre.1"
 
 "@polymer/polymer@^3.0.0-pre.1":
@@ -1590,9 +1647,9 @@ homedir-polyfill@^1.0.0, homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-hooks-fixed@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/hooks-fixed/-/hooks-fixed-2.0.0.tgz#a01d894d52ac7f6599bbb1f63dfc9c411df70cba"
+hooks-fixed@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/hooks-fixed/-/hooks-fixed-2.0.2.tgz#20076daa07e77d8a6106883ce3f1722e051140b0"
 
 hosted-git-info@^2.1.4:
   version "2.5.0"
@@ -2054,6 +2111,10 @@ lodash.escape@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
+lodash.get@4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+
 lodash.isarguments@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/lodash.isarguments/-/lodash.isarguments-3.1.0.tgz#2f573d85c6a24289ff00663b491c1d338ff3458a"
@@ -2264,14 +2325,15 @@ mongodb@2.2.33:
     mongodb-core "2.1.17"
     readable-stream "2.2.7"
 
-mongoose@^4.10.5:
-  version "4.12.4"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.12.4.tgz#502a2c037376a6c6356eee89128e75653612127c"
+mongoose@^4.12.5:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.13.0.tgz#81bb266e045d66ac8dfdd84fc6749c873d7a6ac4"
   dependencies:
     async "2.1.4"
     bson "~1.0.4"
-    hooks-fixed "2.0.0"
+    hooks-fixed "2.0.2"
     kareem "1.5.0"
+    lodash.get "4.4.2"
     mongodb "2.2.33"
     mpath "0.3.0"
     mpromise "0.5.5"

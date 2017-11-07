@@ -71,9 +71,9 @@ function buildSite(event) {
     // Compile the template
     let template;
     if (isPartial) {
-        template = doT.template(contents[0]);      
+        template = doT.render(contents[0]);
     } else {
-        template = doT.template(contents[1]);
+        template = doT.render(contents[1]);
         // add the content to the request
         event.request.pageContent = contents[0];
     }
