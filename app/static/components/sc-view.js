@@ -80,6 +80,7 @@ class SCView extends HTMLElement {
       };
 
       this.classList.add('visible');
+      this.classList.remove('shrink');
       this.addEventListener('transitionend', onTransitionEnd);
     });
   }
@@ -88,6 +89,7 @@ class SCView extends HTMLElement {
     return new Promise((resolve, reject) => {
       const onTransitionEnd = () => {
         this.removeEventListener('transitionend', onTransitionEnd);
+        this.classList.add('shrink');
         resolve();
       };
 

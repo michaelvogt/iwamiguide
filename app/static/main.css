@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  padding: 0;
-  margin: 0;
-  font-size: 24px;
-  font-family: Arial, sans-serif;
-}
-
 sc-view {
   contain: strict;
   width: 100vw;
-  height: 0;
+  height: 100vh;
   opacity: 0;
   pointer-events: none;
   transform: scale(0.95);
@@ -45,9 +34,12 @@ sc-view {
 
 sc-view.visible {
   opacity: 1;
-  min-height: 100vh;
   pointer-events: auto;
   transform: none;
+}
+
+sc-view.shrink {
+  height: 0;
 }
 
 sc-view[remote]::before {

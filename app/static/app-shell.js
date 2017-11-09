@@ -19,20 +19,23 @@
 
 import {Element as PolymerElement} from "../../node_modules/@polymer/polymer/polymer-element.js"
 
-import "../../node_modules/@polymer/app-layout/app-drawer/app-drawer.js";
-import "../../node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js";
-import "../../node_modules/@polymer/app-layout/app-header/app-header.js";
-import "../../node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js";
-import "../../node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js";
-import "../../node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js";
-import "../../node_modules/@polymer/iron-media-query/iron-media-query.js";
-import "../../node_modules/@polymer/iron-icons/iron-icons.js";
-import "../../node_modules/@polymer/paper-listbox/paper-listbox.js";
-import "../../node_modules/@polymer/paper-item/paper-item.js";
-import "../../node_modules/@polymer/paper-tabs/paper-tabs.js";
-import "../../node_modules/@polymer/paper-icon-button/paper-icon-button.js";
+import "/node_modules/@polymer/app-layout/app-drawer/app-drawer.js";
+import "/node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js";
+import "/node_modules/@polymer/app-layout/app-header/app-header.js";
+import "/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js";
+import "/node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js";
+import "/node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js";
+import '/node_modules/@polymer/iron-flex-layout/iron-flex-layout.js';
+import "/node_modules/@polymer/iron-icons/iron-icons.js";
+import "/node_modules/@polymer/iron-media-query/iron-media-query.js";
+import "/node_modules/@polymer/paper-item/paper-item.js";
+import "/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
+import "/node_modules/@polymer/paper-icon-button/paper-icon-button.js";
+import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
+import "/node_modules/@polymer/paper-tabs/paper-tabs.js";
 
-import "/static/sc-router.js";
+import "/static/components/sc-router.js";
+import "/static/components/igar-setting-menu.js"
 
 
 // import "./my-icons.js";
@@ -48,6 +51,11 @@ class AppShell extends PolymerElement {
               :host {
                 --app-primary-color: #20c020;
                 --app-secondary-color: #f09010;
+                
+                --header-height: 212px;
+                
+                --bright-text-color: #fff;
+                --menu-gradient: linear-gradient(rgba(0,0,0, 0), rgba(0,0,0, .8));
         
                 display: block;
               }
@@ -61,8 +69,8 @@ class AppShell extends PolymerElement {
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: 212px;
-                color: #fff;
+                height: var(--header-height);
+                color: var(--bright-text-color);
                 background-color: var(--app-primary-color);
                 /* https://bugs.chromium.org/p/chromium/issues/detail?id=637072 */
                 --app-header-background-front-layer: {
@@ -76,24 +84,64 @@ class AppShell extends PolymerElement {
               }
                               
               .main-header {
-                box-shadow: 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+                box-shadow: 0 5px 6px -3px rgba(0, 0, 0, 0.4);
               }
               
-              app-toolbar#title-bar {
+              #menu-title {
+                margin-top: 20px;
+              }
+              
+              #menu-title div[main-title] {
+                display: inline-block;
+              }
+              
+              app-toolbar#menu-bar {
+                height: var(--header-height);
+                color: var(--bright-text-color);
+                background: var(--app-secondary-color) url("/static/media/stones.jpg") no-repeat left top;
+              }
+              
+              app-toolbar#title-bar, #menu-title {
                 height: 80px;
+                font-weight: bold;
+              }
+              
+              #menu-title .menu-button {
+                left: 16px;
+                margin-right: 5px;
+              }
+              
+              #language-list {
+                --paper-listbox-color: --bright-text-color;
+                --paper-listbox-background-color: rgba(0,0,0,0);
+                --paper-listbox: {
+                  display: flex;
+                }
+                
+                --paper-item-selected: {
+                  background: radial-gradient( rgba( 70,150,70, 1), rgba( 70,150,70, .5) 30%, rgba( 70,150,70, 0) 50%);
+                }
+                
+                --paper-item: {
+                  padding: 5px;
+                }                
+              }
+              
+              #language-list span {
+                
               }
               
               app-toolbar#tabs-bar {
                 position: absolute;
-                bottom: 0px;
+                bottom: 0;
                 width: 100vw;
                 height: 32px;
+                background: var(--menu-gradient)
               }
               
               paper-tabs {
                 --paper-tabs-selection-bar-color: black;
                 height: 100%;
-                max-width: 640px;
               }
               paper-tab {
                 --paper-tab-ink: #aaa;
@@ -105,15 +153,19 @@ class AppShell extends PolymerElement {
               }
             </style>
         
-            <app-drawer-layout id="navmenu" fullbleed>
-              <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">
-          
-                <!-- an empty toolbar in the drawer looks like a
-                     continuation of the main toolbar. It's optional. -->
-                <app-toolbar>Menu</app-toolbar>
+            <app-drawer-layout id="navmenu" fullbleed force-narrow>
+              <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">         
+                <app-toolbar id="menu-bar" class="main-header">
+                  <div id="menu-title" top-item>
+                      <!-- drawer toggle button -->
+                    <paper-icon-button class="menu-button" icon="close" drawer-toggle></paper-icon-button>
+                    <div main-title>石見銀山ARガイド</div>
+                  </div>
+                  <igar-setting-menu bottom-item></igar-setting-menu>
+                </app-toolbar>
           
                 <!-- Nav on mobile: side nav menu -->
-                <paper-listbox selected="{{selected}}" attr-for-selected="route">
+                <paper-listbox id="menu-list" selected="{{route_selected}}" attr-for-selected="route">
                   <paper-item raised name="home" route="/">Home</paper-item>
                   <paper-item raised name="misc" route="/misc/">Misc</paper-item>
                   <paper-item raised name="about" route="/about/">About</paper-item>
@@ -130,10 +182,18 @@ class AppShell extends PolymerElement {
                     <paper-icon-button 
                         class="menu-button" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
                     <div main-title>石見銀山ARガイド</div>
+                    <paper-listbox id="language-list" 
+                        selected="{{lang_selected}}" attr-for-selected="lang" hidden$="{{!wideLayout}}">
+                      <paper-item lang="jp">日本語</paper-item>
+                      <paper-item lang="zh">中文</paper-item>
+                      <paper-item lang="en">en</paper-item>
+                      <paper-item lang="de">de</paper-item>
+                    </paper-listbox>
+
                   </app-toolbar>
                   <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
                     <!-- Nav on desktop: tabs -->
-                    <paper-tabs selected="{{selected}}" attr-for-selected="route" bottom-item scrollable sticky>
+                    <paper-tabs selected="{{route_selected}}" attr-for-selected="route" bottom-item scrollable sticky>
                       <paper-tab raised name="home" route="/">Home</paper-tab>
                       <paper-tab raised name="misc" route="/misc/">Misc</paper-tab>
                       <paper-tab raised name="about" route="/about/">About</paper-tab>
@@ -149,20 +209,31 @@ class AppShell extends PolymerElement {
             </app-drawer-layout>
           
             <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
-            <sc-router id="router" selected="{{selected}}"></sc-router>`
+            <sc-router id="router" selected="{{route_selected}}"></sc-router>`
   }
 
   static get properties() {
     return {
-      selected: {
+      route_selected: {
         type: String,
         notify: true,
-        reflectToAttribute: true
+        reflectToAttribute: true,
+        observer: '_observeSelected'
+      },
+      lang_selected: {
+        type: String,
+        notify: true,
+        reflectToAttribute: true,
+        observer: '_observeSelected'
       },
       // This shouldn't be neccessary, but the Analyzer isn't picking up
       // Polymer.Element#rootPath
       rootPath: String,
     };
+  }
+
+  _observeSelected() {
+    this.$.drawer.close();
   }
 }
 
