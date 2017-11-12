@@ -37,6 +37,8 @@ import "/node_modules/@polymer/paper-tabs/paper-tabs.js";
 import "/static/components/sc-router.js";
 import "/static/components/igar-setting-menu.js"
 
+import {appMenu, appInfo} from "/static/data/shelldata.js"
+
 
 // import "./my-icons.js";
 
@@ -111,13 +113,13 @@ class AppShell extends PolymerElement {
                 margin-right: 5px;
               }
               
-              #language-list {
+              .language-list {
                 --paper-listbox-color: --bright-text-color;
                 --paper-listbox-background-color: rgba(0,0,0,0);
                 --paper-listbox: {
                   display: flex;
                 }
-                
+                                
                 --paper-item-selected: {
                   background: radial-gradient( rgba( 70,150,70, 1), rgba( 70,150,70, .5) 30%, rgba( 70,150,70, 0) 50%);
                 }
@@ -127,53 +129,67 @@ class AppShell extends PolymerElement {
                 }                
               }
               
-              #language-list span {
-                
-              }
-              
-              app-toolbar#tabs-bar {
+              #drawer .language-list {
                 position: absolute;
-                bottom: 0;
-                width: 100vw;
-                height: 32px;
-                background: var(--menu-gradient)
-              }
+                bottom: 110px;
+              }              
+            }
+            
+            .language-list span {
               
-              paper-tabs {
-                --paper-tabs-selection-bar-color: black;
-                height: 100%;
-              }
-              paper-tab {
-                --paper-tab-ink: #aaa;
-                text-transform: uppercase;
-              }
-              
-              [hidden] {
-                display: none !important;
-              }
-            </style>
+            }
+            
+            app-toolbar#tabs-bar {
+              position: absolute;
+              bottom: 0;
+              width: 100vw;
+              height: 32px;
+              background: var(--menu-gradient)
+            }
+            
+            paper-tabs {
+              --paper-tabs-selection-bar-color: black;
+              height: 100%;
+            }
+            paper-tab {
+              --paper-tab-ink: #aaa;
+              text-transform: uppercase;
+            }
+            
+            [hidden] {
+              display: none !important;
+            }
+          </style>
         
             <app-drawer-layout id="navmenu" fullbleed force-narrow>
+              <!-- Drawer content -->
               <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">         
                 <app-toolbar id="menu-bar" class="main-header">
                   <div id="menu-title" top-item>
                       <!-- drawer toggle button -->
                     <paper-icon-button class="menu-button" icon="close" drawer-toggle></paper-icon-button>
-                    <div main-title>石見銀山ARガイド</div>
+                    <div main-title>${appInfo.title}</div>
                   </div>
                   <igar-setting-menu bottom-item></igar-setting-menu>
                 </app-toolbar>
           
                 <!-- Nav on mobile: side nav menu -->
                 <paper-listbox id="menu-list" selected="{{route_selected}}" attr-for-selected="route">
-                  <paper-item raised name="home" route="/">Home</paper-item>
-                  <paper-item raised name="misc" route="/misc/">Misc</paper-item>
-                  <paper-item raised name="about" route="/about/">About</paper-item>
-                  <paper-item raised name="contact" route="/contact/">Contact</paper-item>
+                  ${appMenu.map(item => 
+                    `<paper-item raised name="${item.name}" route="${item.route}">${item.title}</paper-item>`
+                  ).join('')}
+                </paper-listbox>
+                  
+                <!-- todo: replace with component - had problem with layout before-->
+                <paper-listbox class="language-list" selected="{{lang_selected}}" attr-for-selected="lang">
+                  <paper-item lang="jp">日本語</paper-item>
+                  <paper-item lang="zh">中文</paper-item>
+                  <paper-item lang="en">en</paper-item>
+                  <paper-item lang="de">de</paper-item>
                 </paper-listbox>
               </app-drawer>
         
-              <!-- Main content -->
+              <!-- Header content -->
               <app-header-layout>
                 <app-header class="main-header" slot="header" condenses reveals 
                     effects="waterfall blend-background parallax-background">
@@ -181,8 +197,10 @@ class AppShell extends PolymerElement {
                     <!-- drawer toggle button -->
                     <paper-icon-button 
                         class="menu-button" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
-                    <div main-title>石見銀山ARガイド</div>
-                    <paper-listbox id="language-list" 
+                    <div main-title>${appInfo.title}</div>
+                    
+                    <!-- todo: replace with component - had problem with layout before-->
+                    <paper-listbox class="language-list" 
                         selected="{{lang_selected}}" attr-for-selected="lang" hidden$="{{!wideLayout}}">
                       <paper-item lang="jp">日本語</paper-item>
                       <paper-item lang="zh">中文</paper-item>
@@ -194,22 +212,21 @@ class AppShell extends PolymerElement {
                   <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
                     <!-- Nav on desktop: tabs -->
                     <paper-tabs selected="{{route_selected}}" attr-for-selected="route" bottom-item scrollable sticky>
-                      <paper-tab raised name="home" route="/">Home</paper-tab>
-                      <paper-tab raised name="misc" route="/misc/">Misc</paper-tab>
-                      <paper-tab raised name="about" route="/about/">About</paper-tab>
-                      <paper-tab raised name="contact" route="/contact/">Contact</paper-tab>
-                    </paper-tabs>
-                  </app-toolbar>
-          
-                </app-header>
-              
-                <slot></slot>
-              
-              </app-header-layout>
-            </app-drawer-layout>
-          
-            <iron-media-query query="min-width: 600px" query-matches="{{wideLayout}}"></iron-media-query>
-            <sc-router id="router" selected="{{route_selected}}"></sc-router>`
+                      ${appMenu.map(item =>
+                        `<paper-tab raised name="${item.name}" route="${item.route}">${item.title}</paper-tab>`
+                      ).join('')}
+                      </paper-tabs>
+                    </app-toolbar>
+            
+                  </app-header>
+                
+                  <slot></slot>
+                
+                </app-header-layout>
+              </app-drawer-layout>
+            
+              <iron-media-query query="min-width: 640px" query-matches="{{wideLayout}}"></iron-media-query>
+              <sc-router id="router" selected="{{route_selected}}"></sc-router>`
   }
 
   static get properties() {
@@ -218,13 +235,13 @@ class AppShell extends PolymerElement {
         type: String,
         notify: true,
         reflectToAttribute: true,
-        observer: '_observeSelected'
+        observer: '_observeMenuSelected'
       },
       lang_selected: {
         type: String,
         notify: true,
         reflectToAttribute: true,
-        observer: '_observeSelected'
+        observer: '_observeLangSelected'
       },
       // This shouldn't be neccessary, but the Analyzer isn't picking up
       // Polymer.Element#rootPath
@@ -232,7 +249,7 @@ class AppShell extends PolymerElement {
     };
   }
 
-  _observeSelected() {
+  _observeMenuSelected() {
     this.$.drawer.close();
   }
 }
