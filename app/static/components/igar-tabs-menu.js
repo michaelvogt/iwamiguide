@@ -20,11 +20,10 @@
 import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
 import "/node_modules/@polymer/paper-item/paper-item.js";
 import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
-import "/node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
 
-import {langMenu} from "/static/data/shelldata.js"
+import {appMenu} from "/static/data/shelldata.js";
 
-class IgarLanguageMenu extends PolymerElement {
+class IgarTabsMenu extends PolymerElement {
   constructor() {
     super();
   }
@@ -39,53 +38,25 @@ class IgarLanguageMenu extends PolymerElement {
 
   static get template() {
     return `
-      <style>  
-        paper-listbox {
-          @apply(--layout-horizontal);
-          @apply(--layout-around-justified);
-        }        
-      </style>
-      
-      <paper-listbox id='list' selected="{{langselected}}" attr-for-selected="lang">
-        ${langMenu.map(item =>
-          `<paper-item lang="${item.region}">${item.title}</paper-item>`
+      <paper-tabs selected="{{selected}}" attr-for-selected="route" scrollable sticky role="nav">
+          ${appMenu.map(item =>
+            `<paper-tab raised name="${item.name}" route="${item.route}">${item.title}</paper-tab>`
         ).join('')}
-      </paper-listbox>`;
+      </paper-tabs>`
   }
 
   static get properties() {
     return {
-      opened: {
-        type: Boolean,
-        notify: true,
-        reflectToAttribute: true,
-        value: false,
-      },
-      langselected: {
+      selected: {
         type: String,
         notify: true,
-        reflectToAttribute: true,
-        value: 'jp',
+        reflectToAttribute: true
       }
     }
   }
 
-  ready() {
-    super.ready();
-
-    //this.$.list.style.display = 'flex';
-  }
-
-  static get observedAttributes() {return ['opened', 'langselected']; }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    switch (attr) {
-      case 'opened':
-        // todo: open/close menu
-      case 'langselected':
-        this.langselected = newValue;
-    }
-  }
+  static get observedAttributes() {return ['selected']; }
 }
 
-customElements.define('igar-language-menu', IgarLanguageMenu);
+customElements.define('igar-tabs-menu', IgarTabsMenu);
+

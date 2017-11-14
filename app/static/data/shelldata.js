@@ -17,12 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export const appMenu =
-    [{name: 'welcome', route: '/', title: 'ようこそ'},
-    {name: 'jinyatour', route: '/jinyatour/', title: '陣屋ツアー'},
-    {name: 'locations', route: '/locations/', title: '場所'},
-    {name: 'contact', route: '/contact/', title: 'お問い合わせ'}];
+export const appMenu = [
+      {name: 'welcome', route: '/', title: 'ようこそ'},
+      {name: 'jinyatour', route: '/jinyatour/', title: '陣屋ツアー'},
+      {name: 'locations', route: '/locations/', title: '場所'},
+      {name: 'contact', route: '/contact/', title: 'お問い合わせ'}
+    ];
+
+export const langMenu =
+    [{region: 'jp', title: '日本語'},
+      {region: 'zh', title: '中文'},
+      {region: 'en', title: 'EN'},
+      {region: 'de', title: 'DE'}
+    ];
+
+
 
 export const appInfo = {title: '石見銀山ARガイド'};
 
-export const langMenu = {jp: '日本語', zh: '中文', en: 'en', de: 'de'}
+export const hiddenSetting = [
+      {id: 'usear', title: 'Enable AR'},
+      {id: 'onlocation', title: 'On Location'}
+    ];

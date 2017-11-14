@@ -3,8 +3,8 @@
   "name": "Sample Iwami Guide",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#001396",
-  "theme_color": "#009613",
+  "theme_color": "#f09010",
+  "background_color": "#20c020",
   "icons": [
     {
       "src": "https://cdn.glitch.com/a5ca86a6-a28f-4962-8cc2-2a1cbb088957%2Fratochan48.png?1496769533539",

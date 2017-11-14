@@ -35,10 +35,12 @@ import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
 import "/node_modules/@polymer/paper-tabs/paper-tabs.js";
 
 import "/static/components/sc-router.js";
-import "/static/components/igar-setting-menu.js"
+import "/static/components/igar-hidden-setting.js"
+import "/static/components/igar-language-menu.js"
+import "/static/components/igar-tabs-menu.js"
+import "/static/components/igar-list-menu.js"
 
-import {appMenu, appInfo} from "/static/data/shelldata.js"
-
+import {appMenu, langMenu, appInfo} from "/static/data/shelldata.js"
 
 // import "./my-icons.js";
 
@@ -48,9 +50,10 @@ class AppShell extends PolymerElement {
   }
 
   static get template() {
+    // language=HTML
     return `
             <style>
-              :host {
+              :host { 
                 --app-primary-color: #20c020;
                 --app-secondary-color: #f09010;
                 
@@ -58,12 +61,13 @@ class AppShell extends PolymerElement {
                 
                 --bright-text-color: #fff;
                 --menu-gradient: linear-gradient(rgba(0,0,0, 0), rgba(0,0,0, .8));
-        
-                display: block;
-              }
-        
-              app-drawer-layout:not([narrow]) [drawer-toggle] {
-                display: none;
+                --menu-selected-gradient: linear-gradient(rgba(255,255,255, 0), rgba(255,255,255, .8));
+                
+                --app-drawer-content-container: {
+                  display: grid;
+                  grid-template-rows: 212px auto 1fr;
+                  grid-template-columns: auto;
+                }
               }
         
               app-header {
@@ -97,13 +101,24 @@ class AppShell extends PolymerElement {
                 display: inline-block;
               }
               
-              app-toolbar#menu-bar {
+              #menu-bar {
+                grid-column: 1 / -1;
+                
+                display: grid;
                 height: var(--header-height);
                 color: var(--bright-text-color);
                 background: var(--app-secondary-color) url("/static/media/stones.jpg") no-repeat left top;
+                                               
+                --paper-item: {
+                  margin-left: 5px;
+                }               
               }
               
-              app-toolbar#title-bar, #menu-title {
+              #menu-bar igar-hidden-setting {
+                align-self: flex-end;
+              }
+              
+              #title-bar, #menu-title {
                 height: 80px;
                 font-weight: bold;
               }
@@ -114,79 +129,51 @@ class AppShell extends PolymerElement {
               }
               
               .language-list {
+                align-self: flex-end;
+              
                 --paper-listbox-color: --bright-text-color;
                 --paper-listbox-background-color: rgba(0,0,0,0);
-                --paper-listbox: {
-                  display: flex;
-                }
-                                
-                --paper-item-selected: {
-                  background: radial-gradient( rgba( 70,150,70, 1), rgba( 70,150,70, .5) 30%, rgba( 70,150,70, 0) 50%);
-                }
-                
-                --paper-item: {
-                  padding: 5px;
-                }                
+              }
+                            
+              app-toolbar#tabs-bar {
+                position: absolute;
+                bottom: 0;
+                width: 100vw;
+                height: 32px;
+                background: var(--menu-gradient)
               }
               
-              #drawer .language-list {
-                position: absolute;
-                bottom: 110px;
-              }              
-            }
-            
-            .language-list span {
+              paper-tabs {
+                --paper-tabs-selection-bar-color: black;
+                height: 100%;
+              }
               
-            }
-            
-            app-toolbar#tabs-bar {
-              position: absolute;
-              bottom: 0;
-              width: 100vw;
-              height: 32px;
-              background: var(--menu-gradient)
-            }
-            
-            paper-tabs {
-              --paper-tabs-selection-bar-color: black;
-              height: 100%;
-            }
-            paper-tab {
-              --paper-tab-ink: #aaa;
-              text-transform: uppercase;
-            }
-            
-            [hidden] {
-              display: none !important;
-            }
-          </style>
+              paper-tab {
+                --paper-tab-ink: #aaa;
+                text-transform: uppercase;
+              }
+              
+              [hidden] {
+                display: none !important;
+              }
+            </style>
         
             <app-drawer-layout id="navmenu" fullbleed force-narrow>
               <!-- Drawer content -->
               <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">         
-                <app-toolbar id="menu-bar" class="main-header">
+                <header id="menu-bar" class="main-header">
                   <div id="menu-title" top-item>
                       <!-- drawer toggle button -->
                     <paper-icon-button class="menu-button" icon="close" drawer-toggle></paper-icon-button>
                     <div main-title>${appInfo.title}</div>
                   </div>
-                  <igar-setting-menu bottom-item></igar-setting-menu>
-                </app-toolbar>
+                  <igar-hidden-setting></igar-hidden-setting>
+                </header>
           
-                <!-- Nav on mobile: side nav menu -->
-                <paper-listbox id="menu-list" selected="{{route_selected}}" attr-for-selected="route">
-                  ${appMenu.map(item => 
-                    `<paper-item raised name="${item.name}" route="${item.route}">${item.title}</paper-item>`
-                  ).join('')}
-                </paper-listbox>
-                  
-                <!-- todo: replace with component - had problem with layout before-->
-                <paper-listbox class="language-list" selected="{{lang_selected}}" attr-for-selected="lang">
-                  <paper-item lang="jp">日本語</paper-item>
-                  <paper-item lang="zh">中文</paper-item>
-                  <paper-item lang="en">en</paper-item>
-                  <paper-item lang="de">de</paper-item>
-                </paper-listbox>
+                <!-- Nav on mobile -->
+                <igar-list-menu id="menu-list" selected="{{route_selected}}"></igar-list-menu>
+                <igar-language-menu 
+                    class="language-list" selected="{{lang_selected}}" opened="true"></igar-language-menu>
               </app-drawer>
         
               <!-- Header content -->
@@ -194,39 +181,28 @@ class AppShell extends PolymerElement {
                 <app-header class="main-header" slot="header" condenses reveals 
                     effects="waterfall blend-background parallax-background">
                   <app-toolbar id="title-bar">
-                    <!-- drawer toggle button -->
                     <paper-icon-button 
                         class="menu-button" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
                     <div main-title>${appInfo.title}</div>
                     
-                    <!-- todo: replace with component - had problem with layout before-->
-                    <paper-listbox class="language-list" 
-                        selected="{{lang_selected}}" attr-for-selected="lang" hidden$="{{!wideLayout}}">
-                      <paper-item lang="jp">日本語</paper-item>
-                      <paper-item lang="zh">中文</paper-item>
-                      <paper-item lang="en">en</paper-item>
-                      <paper-item lang="de">de</paper-item>
-                    </paper-listbox>
-
+                    <igar-language-menu 
+                        class="language-list" selected="{{lang_selected}}" hidden$="{{!wideLayout}}">
+                    </igar-language-menu>
                   </app-toolbar>
+                                      
+                  <!-- Nav on desktop. Needs toolbar for scroll effect (?) -->
                   <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
-                    <!-- Nav on desktop: tabs -->
-                    <paper-tabs selected="{{route_selected}}" attr-for-selected="route" bottom-item scrollable sticky>
-                      ${appMenu.map(item =>
-                        `<paper-tab raised name="${item.name}" route="${item.route}">${item.title}</paper-tab>`
-                      ).join('')}
-                      </paper-tabs>
-                    </app-toolbar>
-            
-                  </app-header>
-                
-                  <slot></slot>
-                
-                </app-header-layout>
-              </app-drawer-layout>
-            
-              <iron-media-query query="min-width: 640px" query-matches="{{wideLayout}}"></iron-media-query>
-              <sc-router id="router" selected="{{route_selected}}"></sc-router>`
+                    <igar-tabs-menu selected="{{route_selected}}" bottom-item></igar-tabs-menu>
+                  </app-toolbar>
+                </app-header>
+              
+                <slot></slot>
+              
+              </app-header-layout>
+            </app-drawer-layout>
+          
+            <iron-media-query query="min-width: 640px" query-matches="{{wideLayout}}"></iron-media-query>
+            <sc-router id="router" route="{{route_selected}}"></sc-router>`
   }
 
   static get properties() {
@@ -249,8 +225,18 @@ class AppShell extends PolymerElement {
     };
   }
 
+  ready() {
+    super.ready();
+
+    this.la
+  }
+
   _observeMenuSelected() {
     this.$.drawer.close();
+  }
+
+  _observeLangSelected() {
+    // todo: set language property and update displayed texts
   }
 }
 

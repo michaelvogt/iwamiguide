@@ -36,21 +36,27 @@ class SCRouter extends PolymerElement {
     window.removeEventListener('popstate', this._onChanged);
   }
 
+  ready() {
+    super.ready();
+
+    this.route = window.location.pathname;
+  }
+
   static get properties() {
     return {
-      selected: {
+      route: {
         type: String,
         notify: true,
         reflectToAttribute: true
-      },
+      }
     }
   }
 
-  static get observedAttributes() {return ['selected']; }
+  static get observedAttributes() {return ['route']; }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
-      case 'selected':
+      case 'route':
         this.go(newValue);
     }
   }
