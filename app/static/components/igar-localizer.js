@@ -18,14 +18,12 @@
  */
 
 import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
-import "/poly_modules/@polymer/paper-item/paper-item.js";
-import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
 
-import {appMenu} from "/data/shelldata.js";
-
-class IgarTabsMenu extends PolymerElement {
+class IgarLocalizer extends PolymerElement {
   constructor() {
     super();
+
+    this._onChanged = this._onChanged.bind(this);
   }
 
   connectedCallback() {
@@ -36,24 +34,16 @@ class IgarTabsMenu extends PolymerElement {
 
   }
 
-  static get template() {
-    return `
-      <style>
-        paper-tabs {
-          height: 32px;
-        }
-      </style>
-      
-      <paper-tabs selected="{{selected}}" attr-for-selected="route" scrollable sticky role="navigation">
-          ${appMenu.map(item =>
-            `<paper-tab raised name="${item.name}" route="${item.route}" role="menuitem">${item.title}</paper-tab>`
-        ).join('')}
-      </paper-tabs>`
+  ready() {
+    super.ready();
+
+    // todo: app should be displayed in the client language by default when available. English otherwise
+    this.language = 'jp';
   }
 
   static get properties() {
     return {
-      selected: {
+      language: {
         type: String,
         notify: true,
         reflectToAttribute: true
@@ -61,8 +51,21 @@ class IgarTabsMenu extends PolymerElement {
     }
   }
 
-  static get observedAttributes() {return ['selected']; }
+  static get observedAttributes() {
+    return ['language'];
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    switch (attr) {
+      case 'language':
+        this.language = newValue;
+        break;
+    }
+  }
+
+  _onChanged () {
+
+  }
 }
 
-customElements.define('igar-tabs-menu', IgarTabsMenu);
-
+customElements.define('igar-localizer', IgarLocalizer);

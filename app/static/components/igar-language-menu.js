@@ -17,13 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
-import "/node_modules/@polymer/paper-item/paper-item.js";
-import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
-import "/node_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
+import "/poly_modules/@polymer/paper-item/paper-item.js";
+import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
+import "/poly_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
 
-import {langMenu} from "/static/data/shelldata.js"
+import {langMenu} from "/data/shelldata.js"
 
+// todo: space is not available on the page to show all languages. Provide a
 class IgarLanguageMenu extends PolymerElement {
   constructor() {
     super();
@@ -61,28 +62,22 @@ class IgarLanguageMenu extends PolymerElement {
         reflectToAttribute: true,
         value: false,
       },
-      langselected: {
+      selected: {
         type: String,
         notify: true,
         reflectToAttribute: true,
-        value: 'jp',
       }
     }
   }
 
-  ready() {
-    super.ready();
-
-    //this.$.list.style.display = 'flex';
-  }
-
-  static get observedAttributes() {return ['opened', 'langselected']; }
+  static get observedAttributes() {return ['opened', 'selected']; }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
       case 'opened':
         // todo: open/close menu
-      case 'langselected':
+        break;
+      case 'selected':
         this.langselected = newValue;
     }
   }

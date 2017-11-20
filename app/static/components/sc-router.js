@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
 
 class SCRouter extends PolymerElement {
   constructor () {
@@ -62,7 +62,7 @@ class SCRouter extends PolymerElement {
   }
 
   _onChanged () {
-    const path = window.location.pathname;
+    const path = window.location.pathname === '/' ? '/home/' : window.location.pathname;
     const routes = Array.from(this._routes.keys());
     const route = routes.find(r => r.test(path));
     const data = route.exec(path);

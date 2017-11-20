@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
-import "/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
-import "/node_modules/@polymer/paper-item/paper-item.js";
-import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
+import "/poly_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
+import "/poly_modules/@polymer/paper-item/paper-item.js";
+import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
 
-import {hiddenSetting} from "/static/data/shelldata.js";
+import {hiddenSetting} from "/data/shelldata.js";
 
 class IgarHiddenSetting extends PolymerElement {
   constructor () {

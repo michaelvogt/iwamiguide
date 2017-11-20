@@ -28,6 +28,7 @@ const crypto = require('crypto');
 
 const app = express();
 app.use('/node_modules', express.static('node_modules'));
+app.use('/poly_modules', express.static('polymer/node_modules'));
 
 // Matches paths like `/`, `/index.html`, `/about/` or `/about/index.html`.
 const toplevelSection = /([^/]*)(\/|\/index.html)$/;
@@ -56,16 +57,21 @@ app.get(toplevelSection, (req, res) => {
     // the request to have it available for template rendering.
     req.item = req.params[0];
 
+    // The files for the home screen are stored in the folder 'home'
+    const path = req.path === '/' ? '/home/' : req.path;
+
     // If the request has `?partial`, don't render header and footer.
     let files;
     if ('partial' in req.query) {
         files = [
-            fs.readFile(`app/${req.path}/index.html`),
+          fs.readFile('app/templates/content.html'),
+          fs.readFile('data/serverdata.json'),
         ];
     } else {
         files = [
-            fs.readFile(`app/${req.path}/index.html`),
-            fs.readFile('app/layout.html'),
+          fs.readFile('app/templates/content.html'),
+          fs.readFile('app/templates/shell.html'),
+          fs.readFile('data/serverdata.json'),
         ];
     }
 

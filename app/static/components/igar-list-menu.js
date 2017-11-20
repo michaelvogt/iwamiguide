@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
-import "/node_modules/@polymer/paper-item/paper-item.js";
-import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
+import "/poly_modules/@polymer/paper-item/paper-item.js";
+import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
 
-import {appMenu} from "/static/data/shelldata.js";
+import {appMenu} from "/data/shelldata.js";
 
 class IgarListMenu extends PolymerElement {
   constructor() {
@@ -38,10 +38,26 @@ class IgarListMenu extends PolymerElement {
 
   static get template() {
     return `
-      <paper-listbox selected="{{selected}}" attr-for-selected="route" role="nav">
+      <style>
+        .item {
+          margin-top: 10px;
+        }
+        .subitem {
+          margin-left: 10px;
+        }
+      </style>
+      <paper-listbox selected="{{selected}}" attr-for-selected="route" role="menu">
         ${appMenu.map(item =>
-          `<paper-item raised name="${item.name}" route="${item.route}">${item.title}</paper-item>`
+          `<paper-item class="item" raised name="${item.name}" route="${item.route}" role="menuitem">
+            ${item.title}
+          </paper-item>
+            ${item.sub ? item.sub.map(subItem =>
+              `<paper-item raised class="subitem" name="${subItem.name}" route="${subItem.route}" role="menuitem">
+                ${subItem.title}
+              </paper-item>`
+            ).join('') : ''}`
         ).join('')}
+        </dl>
       </paper-listbox>`
   }
 

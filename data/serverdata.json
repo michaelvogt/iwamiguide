@@ -1,0 +1,25 @@
+/**
+ * Iwami Ginzan AR, AR tour guide through the world heritage site Iwami Ginzan
+ * Copyright (C) 2017  Michael Vogt
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+{
+  "/jinyatour/jinya/":
+    "<p>北住あみまぞ平質いを梅強ムノワ県打域月嬉ルサ豊熊っゃぐレ治打ヨルヲカ書本ウチオト考団ろまぞぽ写判腕ぱす。7京び境3本ろ目政タロナ下毎ッ疑都造今ハエキ高9中ケサ院聞きや認道セコタ社連らせ驚暮ルもるや大入ぞじ竹務あべ名綸ユハ行陸くのつ。雑89転為ノ予心ょ永手こへ速上いあへ美娘アチミシ絞選触まぽ競作なの政期さよい克59戦ムオ要着カテヨ属愛カ査芸ナ長下向舎へ。</p>",
+  "/jinyatour/nagaya/":
+    "<p>北住あみまぞ平質いを梅強ムノワ県打域月嬉ルサ豊熊っゃぐレ治打ヨルヲカ書本ウチオト考団ろまぞぽ写判腕ぱす。7京び境3本ろ目政タロナ下毎ッ疑都造今ハエキ高9中ケサ院聞きや認道セコタ社連らせ驚暮ルもるや大入ぞじ竹務あべ名綸ユハ行陸くのつ。雑89転為ノ予心ょ永手こへ速上いあへ美娘アチミシ絞選触まぽ競作なの政期さよい克59戦ムオ要着カテヨ属愛カ査芸ナ長下向舎へ。</p>"
+}

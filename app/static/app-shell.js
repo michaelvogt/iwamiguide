@@ -17,30 +17,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Element as PolymerElement} from "../../node_modules/@polymer/polymer/polymer-element.js"
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
 
-import "/node_modules/@polymer/app-layout/app-drawer/app-drawer.js";
-import "/node_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js";
-import "/node_modules/@polymer/app-layout/app-header/app-header.js";
-import "/node_modules/@polymer/app-layout/app-header-layout/app-header-layout.js";
-import "/node_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js";
-import "/node_modules/@polymer/app-layout/app-toolbar/app-toolbar.js";
-import '/node_modules/@polymer/iron-flex-layout/iron-flex-layout.js';
-import "/node_modules/@polymer/iron-icons/iron-icons.js";
-import "/node_modules/@polymer/iron-media-query/iron-media-query.js";
-import "/node_modules/@polymer/paper-item/paper-item.js";
-import "/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
-import "/node_modules/@polymer/paper-icon-button/paper-icon-button.js";
-import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
-import "/node_modules/@polymer/paper-tabs/paper-tabs.js";
+import "/poly_modules/@polymer/app-layout/app-drawer/app-drawer.js";
+import "/poly_modules/@polymer/app-layout/app-drawer-layout/app-drawer-layout.js";
+import "/poly_modules/@polymer/app-layout/app-header/app-header.js";
+import "/poly_modules/@polymer/app-layout/app-header-layout/app-header-layout.js";
+import "/poly_modules/@polymer/app-layout/app-scroll-effects/app-scroll-effects.js";
+import "/poly_modules/@polymer/app-layout/app-toolbar/app-toolbar.js";
+import '/poly_modules/@polymer/iron-flex-layout/iron-flex-layout.js';
+import "/poly_modules/@polymer/iron-icons/iron-icons.js";
+import "/poly_modules/@polymer/iron-media-query/iron-media-query.js";
+import "/poly_modules/@polymer/paper-item/paper-item.js";
+import "/poly_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
+import "/poly_modules/@polymer/paper-icon-button/paper-icon-button.js";
+import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
+import "/poly_modules/@polymer/paper-tabs/paper-tabs.js";
 
 import "/static/components/sc-router.js";
 import "/static/components/igar-hidden-setting.js"
 import "/static/components/igar-language-menu.js"
 import "/static/components/igar-tabs-menu.js"
 import "/static/components/igar-list-menu.js"
+import "/static/components/igar-localizer.js"
 
-import {appMenu, langMenu, appInfo} from "/static/data/shelldata.js"
+import {appMenu, langMenu, appInfo} from "/data/shelldata.js"
 
 // import "./my-icons.js";
 
@@ -64,9 +65,8 @@ class AppShell extends PolymerElement {
                 --menu-selected-gradient: linear-gradient(rgba(255,255,255, 0), rgba(255,255,255, .8));
                 
                 --app-drawer-content-container: {
-                  display: grid;
-                  grid-template-rows: 212px auto 1fr;
-                  grid-template-columns: auto;
+                  display: flex;
+                  flex-direction: column;
                 }
               }
         
@@ -115,7 +115,7 @@ class AppShell extends PolymerElement {
               }
               
               #menu-bar igar-hidden-setting {
-                align-self: flex-end;
+                align-self: end;
               }
               
               #title-bar, #menu-title {
@@ -126,6 +126,15 @@ class AppShell extends PolymerElement {
               #menu-title .menu-button {
                 left: 16px;
                 margin-right: 5px;
+              }
+              
+              #menu-list {
+                flex: 1 0 100px;
+                overflow-y: auto;
+              }
+              
+              #menu-list  {
+                --paper-item-min-height: 30px;
               }
               
               .language-list {
@@ -171,7 +180,7 @@ class AppShell extends PolymerElement {
                 </header>
           
                 <!-- Nav on mobile -->
-                <igar-list-menu id="menu-list" selected="{{route_selected}}"></igar-list-menu>
+                <igar-list-menu id="menu-list" selected="{{route_selected}}" role="navigation"></igar-list-menu>
                 <igar-language-menu 
                     class="language-list" selected="{{lang_selected}}" opened="true"></igar-language-menu>
               </app-drawer>
@@ -192,7 +201,7 @@ class AppShell extends PolymerElement {
                                       
                   <!-- Nav on desktop. Needs toolbar for scroll effect (?) -->
                   <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
-                    <igar-tabs-menu selected="{{route_selected}}" bottom-item></igar-tabs-menu>
+                    <igar-tabs-menu selected="{{route_selected}}" bottom-item role="navigation"></igar-tabs-menu>
                   </app-toolbar>
                 </app-header>
               
@@ -202,7 +211,8 @@ class AppShell extends PolymerElement {
             </app-drawer-layout>
           
             <iron-media-query query="min-width: 640px" query-matches="{{wideLayout}}"></iron-media-query>
-            <sc-router id="router" route="{{route_selected}}"></sc-router>`
+            <sc-router id="router" route="{{route_selected}}"></sc-router>
+            <igar-localizer language="{{lang_selected}}"></igar-localizer>`
   }
 
   static get properties() {
