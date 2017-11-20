@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
 
 class SCRouter extends PolymerElement {
   constructor () {
@@ -36,27 +36,33 @@ class SCRouter extends PolymerElement {
     window.removeEventListener('popstate', this._onChanged);
   }
 
+  ready() {
+    super.ready();
+
+    this.route = window.location.pathname;
+  }
+
   static get properties() {
     return {
-      selected: {
+      route: {
         type: String,
         notify: true,
         reflectToAttribute: true
-      },
+      }
     }
   }
 
-  static get observedAttributes() {return ['selected']; }
+  static get observedAttributes() {return ['route']; }
 
   attributeChangedCallback(attr, oldValue, newValue) {
     switch (attr) {
-      case 'selected':
+      case 'route':
         this.go(newValue);
     }
   }
 
   _onChanged () {
-    const path = window.location.pathname;
+    const path = window.location.pathname === '/' ? '/home/' : window.location.pathname;
     const routes = Array.from(this._routes.keys());
     const route = routes.find(r => r.test(path));
     const data = route.exec(path);

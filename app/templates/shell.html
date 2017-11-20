@@ -55,21 +55,23 @@
   </script>
 
   <!-- Can't import in component. Needs polymer 3 change -->
-  <script defer async src="/node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
+  <script defer async src="/poly_modules/web-animations-js/web-animations-next-lite.min.js"></script>
 
   <script type="module" defer src="/static/components/sc-view.js"></script>
   <script type="module" defer src="/static/app.js"></script>
 
-  <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="/poly_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script type="module" src="/static/app-shell.js"></script>
 
   <!-- General styles for first page render -->
   <style>
+    @import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+
     html, body {
       padding: 0;
       margin: 0;
-      font-size: 24px;
-      font-family: Arial, sans-serif;
+      font-size: 20px;
+      font-family: 'Noto Sans Japanese', 'Arial', sans-serif;
     }
   </style>
 </head>
@@ -77,9 +79,9 @@
 <!-- todo: display tour map while polymer is initilized -->
 <app-shell>
   [[? it.item !== ""]]
-  <sc-view remote class="view-home shrink" route="^/$"></sc-view>
+  <sc-view remote class="view-home shrink" route="^/home/(.*)"></sc-view>
   [[??]]
-  <sc-view class="view-home visible" route="^/$">[[= it.pageContent]]</sc-view>
+  <sc-view class="view-home visible" route="^/home/(.*)">[[= it.pageContent]]</sc-view>
   [[?]]
   [[? it.item !== "about"]]
   <sc-view remote class="view-jinyatour shrink" route="^/jinyatour/(.*)"></sc-view>

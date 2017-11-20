@@ -1,0 +1,42 @@
+{
+  "name": "IwamiGuide",
+  "version": "0.0.2",
+  "private": false,
+  "description": "Guide for Iwami Ginzan",
+  "author": "Michael Vogt",
+  "main": "index.js",
+  "flat": true,
+  "scripts": {
+    "start": "node --inspect index.js",
+    "devstart": "nodemon ./",
+    "lint": "eslint *.js"
+  },
+  "dependencies": {
+    "@polymer/app-layout": "^3.0.0-pre.1",
+    "@polymer/iron-icons": "^3.0.0-pre.1",
+    "@polymer/iron-media-query": "^3.0.0-pre.1",
+    "@polymer/iron-selector": "^3.0.0-pre.1",
+    "@polymer/neon-animation": "^0.0.3",
+    "@polymer/paper-dropdown-menu": "^3.0.0-pre.1",
+    "@polymer/paper-icon-button": "^3.0.0-pre.1",
+    "@polymer/paper-item": "^3.0.0-pre.1",
+    "@polymer/paper-listbox": "^3.0.0-pre.1",
+    "@polymer/paper-tabs": "^3.0.0-pre.1",
+    "@polymer/polymer": "^3.0.0-pre.1",
+    "@webcomponents/webcomponentsjs": "^1.0.17"
+  },
+  "license": "GPL-3.0",
+  "keywords": [
+    "World Heritage",
+    "Iwami Ginzan",
+    "Guide"
+  ],
+  "resolutions": {
+    "@polymer/iron-selector": "3.0.0-pre.1",
+    "@polymer/neon-animation": "0.0.3",
+    "@polymer/polymer": "3.0.0-pre.1",
+    "@polymer/iron-resizable-behavior": "3.0.0-pre.1",
+    "@polymer/iron-meta": "3.0.0-pre.1",
+    "web-animations-js": "2.3.1"
+  }
+}

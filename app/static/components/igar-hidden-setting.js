@@ -17,12 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Element as PolymerElement} from "/node_modules/@polymer/polymer/polymer-element.js"
-import "/node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
-import "/node_modules/@polymer/paper-item/paper-item.js";
-import "/node_modules/@polymer/paper-listbox/paper-listbox.js";
+import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
+import "/poly_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
+import "/poly_modules/@polymer/paper-item/paper-item.js";
+import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
 
-class IgarSettingMenu extends PolymerElement {
+import {hiddenSetting} from "/data/shelldata.js";
+
+class IgarHiddenSetting extends PolymerElement {
   constructor () {
     super();
   }
@@ -47,7 +49,11 @@ class IgarSettingMenu extends PolymerElement {
             color: #eee;
             padding: 0;
           }
-        };
+        
+          --paper-dropdown-menu-ripple: {
+            bottom: 0;
+          }
+        }
         
         paper-dropdown-menu {
           width: 100%;
@@ -55,15 +61,16 @@ class IgarSettingMenu extends PolymerElement {
         }
         
         #usear, #onlocation {
-          width: 250px;
+          width: 256px;
         }
       </style>
       
       <paper-dropdown-menu id="menu" on-value-changed="_handleValueChange">
         <paper-listbox slot="dropdown-content" multi 
             attr-for-selected="id" selected="{{setting}}" fallback-selection="None">
-          <paper-item id="usear">Enable AR</paper-item>
-          <paper-item id="onlocation">On location</paper-item>
+          ${hiddenSetting.map(item =>
+            `<paper-item id="${item.id}">${item.title}</paper-item>`
+          ).join('')}
         </paper-listbox>
       </paper-dropdown-menu>`
   }
@@ -117,4 +124,4 @@ class IgarSettingMenu extends PolymerElement {
   static get observedAttributes() {return ['usear', 'onlocation']; }
 }
 
-customElements.define('igar-setting-menu', IgarSettingMenu);
+customElements.define('igar-hidden-setting', IgarHiddenSetting);

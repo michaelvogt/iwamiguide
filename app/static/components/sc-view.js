@@ -98,7 +98,12 @@ class SCView extends HTMLElement {
     });
   }
 
-  update() {
+  update(data) {
+    // todo: for now just load the data, because page content isn't decided, yet
+    if (this._isRemote && !this._view) {
+      this._loadView(data);
+    }
+
     return Promise.resolve();
   }
 }

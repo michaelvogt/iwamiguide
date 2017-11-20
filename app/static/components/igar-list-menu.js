@@ -20,12 +20,10 @@
 import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
 import "/poly_modules/@polymer/paper-item/paper-item.js";
 import "/poly_modules/@polymer/paper-listbox/paper-listbox.js";
-import "/poly_modules/@polymer/iron-flex-layout/iron-flex-layout.js";
 
-import {langMenu} from "/data/shelldata.js"
+import {appMenu} from "/data/shelldata.js";
 
-// todo: space is not available on the page to show all languages. Provide a
-class IgarLanguageMenu extends PolymerElement {
+class IgarListMenu extends PolymerElement {
   constructor() {
     super();
   }
@@ -40,47 +38,41 @@ class IgarLanguageMenu extends PolymerElement {
 
   static get template() {
     return `
-      <style>  
-        paper-listbox {
-          @apply(--layout-horizontal);
-          @apply(--layout-around-justified);
-        }        
+      <style>
+        .item {
+          margin-top: 10px;
+        }
+        .subitem {
+          margin-left: 10px;
+        }
       </style>
-      
-      <paper-listbox id='list' selected="{{langselected}}" attr-for-selected="lang">
-        ${langMenu.map(item =>
-          `<paper-item lang="${item.region}">${item.title}</paper-item>`
+      <paper-listbox selected="{{selected}}" attr-for-selected="route" role="menu">
+        ${appMenu.map(item =>
+          `<paper-item class="item" raised name="${item.name}" route="${item.route}" role="menuitem">
+            ${item.title}
+          </paper-item>
+            ${item.sub ? item.sub.map(subItem =>
+              `<paper-item raised class="subitem" name="${subItem.name}" route="${subItem.route}" role="menuitem">
+                ${subItem.title}
+              </paper-item>`
+            ).join('') : ''}`
         ).join('')}
-      </paper-listbox>`;
+        </dl>
+      </paper-listbox>`
   }
 
   static get properties() {
     return {
-      opened: {
-        type: Boolean,
-        notify: true,
-        reflectToAttribute: true,
-        value: false,
-      },
       selected: {
         type: String,
         notify: true,
-        reflectToAttribute: true,
+        reflectToAttribute: true
       }
     }
   }
 
-  static get observedAttributes() {return ['opened', 'selected']; }
-
-  attributeChangedCallback(attr, oldValue, newValue) {
-    switch (attr) {
-      case 'opened':
-        // todo: open/close menu
-        break;
-      case 'selected':
-        this.langselected = newValue;
-    }
-  }
+  static get observedAttributes() {return ['selected']; }
 }
 
-customElements.define('igar-language-menu', IgarLanguageMenu);
+customElements.define('igar-list-menu', IgarListMenu);
+
