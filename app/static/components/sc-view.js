@@ -21,6 +21,7 @@ class SCView extends HTMLElement {
     super();
 
     this._view = null;
+    this._uri = "";
     this._isRemote = (this.getAttribute('remote') !== null);
   }
 
@@ -56,9 +57,11 @@ class SCView extends HTMLElement {
     const spinnerTimeout = setTimeout(_ => this._showSpinner(), 500);
 
     fetch(`${data[0]}?partial=`)
-        .then(this._verifyResponse)
+        .then(this._validateResponse)
         .then(this._responseAsText)
         .then((text) => {
+          this._uri = data[0];
+          this.view = text;
           this.innerHTML = text;
 
           // Clear the timeout and remove the spinner if needed.
@@ -69,9 +72,8 @@ class SCView extends HTMLElement {
   }
 
   in(data) {
-    if (this._isRemote && !this._view) {
-      this._loadView(data);
-    }
+    // Caching will be handled by the ServiceWorker
+    this._loadView(data);
 
     return new Promise((resolve, reject) => {
       const onTransitionEnd = () => {
@@ -99,10 +101,9 @@ class SCView extends HTMLElement {
   }
 
   update(data) {
-    // todo: for now just load the data, because page content isn't decided, yet
-    if (this._isRemote && !this._view) {
-      this._loadView(data);
-    }
+    // todo: for now just load the data
+    // Caching will be handled by the ServiceWorker
+    this._loadView(data);
 
     return Promise.resolve();
   }

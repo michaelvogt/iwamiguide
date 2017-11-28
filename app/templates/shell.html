@@ -17,7 +17,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!doctype html>
-<html lang="jp">
+<html lang="ja-JP">
 <head>
   <meta charset="utf-8">
   <meta name="author" content="Paul Lewis"/>
@@ -57,46 +57,52 @@
   <!-- Can't import in component. Needs polymer 3 change -->
   <script defer async src="/poly_modules/web-animations-js/web-animations-next-lite.min.js"></script>
 
-  <script type="module" defer src="/static/components/sc-view.js"></script>
-  <script type="module" defer src="/static/app.js"></script>
+  <script type="module" src="/static/components/sc-view.js"></script>
+  <script type="module" src="/static/app.js"></script>
 
-  <script src="/poly_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script defer src="/poly_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script type="module" src="/static/app-shell.js"></script>
 
   <!-- General styles for first page render -->
   <style>
-    @import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+    /*@import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css); with 3MP too big for now */
 
     html, body {
       padding: 0;
       margin: 0;
       font-size: 20px;
-      font-family: 'Noto Sans Japanese', 'Arial', sans-serif;
+      font-family: 'Arial', sans-serif;
+      /*font-family: 'Noto Sans Japanese', 'Arial', sans-serif;*/
     }
   </style>
 </head>
 <body unresolved>
 <!-- todo: display tour map while polymer is initilized -->
 <app-shell>
-  [[? it.item !== ""]]
-  <sc-view remote class="view-home shrink" route="^/home/(.*)"></sc-view>
+  [[? it.item !== "home"]]
+  <sc-view class="view-home shrink" route="^/home/(.*)"></sc-view>
   [[??]]
-  <sc-view class="view-home visible" route="^/home/(.*)">[[= it.pageContent]]</sc-view>
+  <sc-view class="view-home visible" route="^/home/(.*)">[[= it.maincontent]]</sc-view>
   [[?]]
-  [[? it.item !== "about"]]
-  <sc-view remote class="view-jinyatour shrink" route="^/jinyatour/(.*)"></sc-view>
+  [[? it.item !== "jinyatour"]]
+  <sc-view class="view-jinyatour shrink" route="^/jinyatour/(.*)"></sc-view>
   [[??]]
-  <sc-view class="view-jinyayour visible" route="^/jinyatour/(.*)">[[= it.pageContent]]</sc-view>
+  <sc-view class="view-jinyayour visible" route="^/jinyatour/(.*)">[[= it.maincontent]]</sc-view>
+  [[?]]
+  [[? it.item !== "locations"]]
+  <sc-view class="view-locations shrink" route="^/locations/(.*)"></sc-view>
+  [[??]]
+  <sc-view class="view-locations visible" route="^/locations/(.*)">[[= it.maincontent]]</sc-view>
   [[?]]
   [[? it.item !== "contact"]]
-  <sc-view remote class="view-locations shrink" route="^/locations/(.*)"></sc-view>
+  <sc-view class="view-contact shrink" route="^/contact/(.*)"></sc-view>
   [[??]]
-  <sc-view class="view-locations visible" route="^/locations/(.*)">[[= it.pageContent]]</sc-view>
+  <sc-view class="view-contact visible" route="^/contact/(.*)">[[= it.maincontent]]</sc-view>
   [[?]]
-  [[? it.item !== "misc"]]
-  <sc-view remote class="view-contact shrink" route="^/contact/(.*)"></sc-view>
+  [[? it.item !== "404"]]
+  <sc-view class="view-error shrink" route="^/404/(.*)"></sc-view>
   [[??]]
-  <sc-view class="view-contact visible" route="^/contact/(.*)">[[= it.pageContent]]</sc-view>
+  <sc-view class="view-error visible" route="^/404/(.*)">[[= it.maincontent]]</sc-view>
   [[?]]
 </app-shell>
 

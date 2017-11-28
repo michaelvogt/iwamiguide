@@ -18,20 +18,12 @@
  */
 
 sc-view {
-  contain: strict;
-  width: 100vw;
-  height: 100vh;
   opacity: 0;
   pointer-events: none;
   transform: scale(0.95);
   transition: transform 0.3s cubic-bezier(0,0,0.3,1),
     opacity 0.3s cubic-bezier(0,0,0.3,1);
-  font-size: 4em;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  color: white;
+  color: #222;
 }
 
 sc-view.visible {
@@ -41,7 +33,7 @@ sc-view.visible {
 }
 
 sc-view.shrink {
-  height: 0;
+  display: none;
 }
 
 sc-view[remote]::before {
@@ -66,7 +58,7 @@ sc-view[remote]::after {
   top: 50%;
   width: 40px;
   height: 40px;
-  background: url(https://cdn.glitch.com/a5ca86a6-a28f-4962-8cc2-2a1cbb088957%2Fspinner.png?1496748544731) center center no-repeat;
+  background: url('/static/media/spinner.png') center center no-repeat;
   background-size: 40px 40px;
   animation-name: spin;
   animation-duration: 1s;

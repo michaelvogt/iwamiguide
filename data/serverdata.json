@@ -1,25 +1,155 @@
-/**
- * Iwami Ginzan AR, AR tour guide through the world heritage site Iwami Ginzan
- * Copyright (C) 2017  Michael Vogt
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
-
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
-
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 {
-  "/jinyatour/jinya/":
-    "<p>北住あみまぞ平質いを梅強ムノワ県打域月嬉ルサ豊熊っゃぐレ治打ヨルヲカ書本ウチオト考団ろまぞぽ写判腕ぱす。7京び境3本ろ目政タロナ下毎ッ疑都造今ハエキ高9中ケサ院聞きや認道セコタ社連らせ驚暮ルもるや大入ぞじ竹務あべ名綸ユハ行陸くのつ。雑89転為ノ予心ょ永手こへ速上いあへ美娘アチミシ絞選触まぽ競作なの政期さよい克59戦ムオ要着カテヨ属愛カ査芸ナ長下向舎へ。</p>",
-  "/jinyatour/nagaya/":
-    "<p>北住あみまぞ平質いを梅強ムノワ県打域月嬉ルサ豊熊っゃぐレ治打ヨルヲカ書本ウチオト考団ろまぞぽ写判腕ぱす。7京び境3本ろ目政タロナ下毎ッ疑都造今ハエキ高9中ケサ院聞きや認道セコタ社連らせ驚暮ルもるや大入ぞじ竹務あべ名綸ユハ行陸くのつ。雑89転為ノ予心ょ永手こへ速上いあへ美娘アチミシ絞選触まぽ競作なの政期さよい克59戦ムオ要着カテヨ属愛カ査芸ナ長下向舎へ。</p>"
+  "home": {
+    "item": "home",
+    "isStatic": true,
+    "template": "app/pages/home/index.html"
+  },
+  "tutorial": {
+    "item": "home",
+    "isStatic": true,
+    "template": "app/pages/home/tutorial.html"
+  },
+
+  "jinyatour": {
+    "item": "jinyatour",
+    "isStatic": true,
+    "template": "app/pages/jinyatour/index.html"
+  },
+  "jinya": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "陣屋",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "kigamishrine": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "城上神社",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "nagaya": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "中原長屋",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "okake": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "おかけ",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "idoshrine": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "井戸神社",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "kumagaike": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "熊谷家",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "shogenji": {
+    "item": "jinyatour",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "勝源寺",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+
+  "locations": {
+    "item": "locations",
+    "isStatic": true,
+    "template": "app/pages/locations/index.html"
+  },
+  "sahimeyamashrine": {
+    "item": "locations",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "佐毘山神社",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "kanseontemple": {
+    "item": "locations",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "観世音寺",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "townscape": {
+    "item": "locations",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "町並み",
+      "subtitle1": "歴史",
+      "subtitle2": "文化"
+    }
+  },
+  "bakery": {
+    "item": "locations",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "ベーカリー",
+      "subtitle1": "歴史",
+      "subtitle2": "作品"
+    }
+  },
+  "kamayashaft": {
+    "item": "locations",
+    "isStatic": false,
+    "template": "app/templates/content.html",
+    "content": {
+      "title": "釜屋間歩",
+      "subtitle1": "歴史",
+      "subtitle2": "生活"
+    }
+  },
+  "contact": {
+    "item": "contact",
+    "isStatic": true,
+    "template": "app/pages/contact/index.html"
+  },
+  "404": {
+    "item": "404",
+    "isStatic": false,
+    "template": "app/templates/404.html"
+  }
 }

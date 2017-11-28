@@ -43,8 +43,6 @@ import "/static/components/igar-localizer.js"
 
 import {appMenu, langMenu, appInfo} from "/data/shelldata.js"
 
-// import "./my-icons.js";
-
 class AppShell extends PolymerElement {
   constructor() {
     super();
@@ -53,166 +51,200 @@ class AppShell extends PolymerElement {
   static get template() {
     // language=HTML
     return `
-            <style>
-              :host { 
-                --app-primary-color: #20c020;
-                --app-secondary-color: #f09010;
-                
-                --header-height: 212px;
-                
-                --bright-text-color: #fff;
-                --menu-gradient: linear-gradient(rgba(0,0,0, 0), rgba(0,0,0, .8));
-                --menu-selected-gradient: linear-gradient(rgba(255,255,255, 0), rgba(255,255,255, .8));
-                
-                --app-drawer-content-container: {
-                  display: flex;
-                  flex-direction: column;
-                }
-              }
-        
-              app-header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: var(--header-height);
-                color: var(--bright-text-color);
-                background-color: var(--app-primary-color);
-                /* https://bugs.chromium.org/p/chromium/issues/detail?id=637072 */
-                --app-header-background-front-layer: {
-                  background-image: url("/static/media/header.jpg");
-                  background-position: left center;
-                };
-              }      
-                
-              app-header paper-icon-button {
-                --paper-icon-button-ink-color: #333;
-              }
-                              
-              .main-header {
-                box-shadow: 0 5px 6px -3px rgba(0, 0, 0, 0.4);
-              }
-              
-              #menu-title {
-                margin-top: 20px;
-              }
-              
-              #menu-title div[main-title] {
-                display: inline-block;
-              }
-              
-              #menu-bar {
-                grid-column: 1 / -1;
-                
-                display: grid;
-                height: var(--header-height);
-                color: var(--bright-text-color);
-                background: var(--app-secondary-color) url("/static/media/stones.jpg") no-repeat left top;
-                                               
-                --paper-item: {
-                  margin-left: 5px;
-                }               
-              }
-              
-              #menu-bar igar-hidden-setting {
-                align-self: end;
-              }
-              
-              #title-bar, #menu-title {
-                height: 80px;
-                font-weight: bold;
-              }
-              
-              #menu-title .menu-button {
-                left: 16px;
-                margin-right: 5px;
-              }
-              
-              #menu-list {
-                flex: 1 0 100px;
-                overflow-y: auto;
-              }
-              
-              #menu-list  {
-                --paper-item-min-height: 30px;
-              }
-              
-              .language-list {
-                align-self: flex-end;
-              
-                --paper-listbox-color: --bright-text-color;
-                --paper-listbox-background-color: rgba(0,0,0,0);
-              }
-                            
-              app-toolbar#tabs-bar {
-                position: absolute;
-                bottom: 0;
-                width: 100vw;
-                height: 32px;
-                background: var(--menu-gradient)
-              }
-              
-              paper-tabs {
-                --paper-tabs-selection-bar-color: black;
-                height: 100%;
-              }
-              
-              paper-tab {
-                --paper-tab-ink: #aaa;
-                text-transform: uppercase;
-              }
-              
-              [hidden] {
-                display: none !important;
-              }
-            </style>
-        
-            <app-drawer-layout id="navmenu" fullbleed force-narrow>
-              <!-- Drawer content -->
-              <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">         
-                <header id="menu-bar" class="main-header">
-                  <div id="menu-title" top-item>
-                      <!-- drawer toggle button -->
-                    <paper-icon-button class="menu-button" icon="close" drawer-toggle></paper-icon-button>
-                    <div main-title>${appInfo.title}</div>
-                  </div>
-                  <igar-hidden-setting></igar-hidden-setting>
-                </header>
+      <style>
+        :host { 
+          --app-primary-color: #20c020;
+          --app-secondary-color: #f09010;
           
-                <!-- Nav on mobile -->
-                <igar-list-menu id="menu-list" selected="{{route_selected}}" role="navigation"></igar-list-menu>
-                <igar-language-menu 
-                    class="language-list" selected="{{lang_selected}}" opened="true"></igar-language-menu>
-              </app-drawer>
-        
-              <!-- Header content -->
-              <app-header-layout>
-                <app-header class="main-header" slot="header" condenses reveals 
-                    effects="waterfall blend-background parallax-background">
-                  <app-toolbar id="title-bar">
-                    <paper-icon-button 
-                        class="menu-button" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
-                    <div main-title>${appInfo.title}</div>
-                    
-                    <igar-language-menu 
-                        class="language-list" selected="{{lang_selected}}" hidden$="{{!wideLayout}}">
-                    </igar-language-menu>
-                  </app-toolbar>
-                                      
-                  <!-- Nav on desktop. Needs toolbar for scroll effect (?) -->
-                  <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
-                    <igar-tabs-menu selected="{{route_selected}}" bottom-item role="navigation"></igar-tabs-menu>
-                  </app-toolbar>
-                </app-header>
-              
-                <slot></slot>
-              
-              </app-header-layout>
-            </app-drawer-layout>
+          --header-height: 212px;
           
-            <iron-media-query query="min-width: 640px" query-matches="{{wideLayout}}"></iron-media-query>
-            <sc-router id="router" route="{{route_selected}}"></sc-router>
-            <igar-localizer language="{{lang_selected}}"></igar-localizer>`
+          --bright-text-color: #fff;
+          --menu-gradient: linear-gradient(rgba(0,0,0, 0), rgba(0,0,0, .8));
+          --menu-selected-gradient: linear-gradient(rgba(255,255,255, 0), rgba(255,255,255, .8));
+          
+          --app-drawer-content-container: {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+        
+        h1 {
+          font-size: 1em;
+          display: inline-block;
+        }
+  
+        app-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: var(--header-height);
+          color: var(--bright-text-color);
+          background-color: var(--app-primary-color);
+          /* https://bugs.chromium.org/p/chromium/issues/detail?id=637072 */
+          --app-header-background-front-layer: {
+            background-position: left center;
+          };
+        } 
+        
+        :host() {
+          --app-header-background-front-layer: {
+            background-image: url("/static/media/header.jpg");
+          };       
+        }     
+          
+        :host([route_selected="/"]), :host([route_selected*="home"]) {
+          --app-header-background-front-layer: {
+            background-image: url("/static/media/townabove.jpg");
+          };       
+        }     
+          
+        :host([route_selected*="jinyatour"]) {
+          --app-header-background-front-layer: {
+            background-image: url("/static/media/jinyagate.jpg");
+          };                       
+        }     
+          
+        :host([route_selected*="locations"]) {
+          --app-header-background-front-layer: {
+            background-image: url("/static/media/shimogawara.jpg");
+          };                       
+        }     
+          
+        :host([route_selected*="contact"]) {
+          --app-header-background-front-layer: {
+            background-image: url("/static/media/townscape.jpg");
+          };                       
+        }     
+          
+        app-header paper-icon-button {
+          --paper-icon-button-ink-color: #333;
+        }
+                        
+        .main-header {
+          box-shadow: 0 5px 6px -3px rgba(0, 0, 0, 0.4);
+        }
+        
+        #menu-title {
+          margin-top: 20px;
+        }
+        
+        #menu-title div[main-title] {
+          display: inline-block;
+        }
+        
+        #menu-bar {
+          grid-column: 1 / -1;
+          
+          display: grid;
+          height: var(--header-height);
+          color: var(--bright-text-color);
+          background: var(--app-secondary-color) url("/static/media/stones.jpg") no-repeat left top;
+                                         
+          --paper-item: {
+            margin-left: 5px;
+          }               
+        }
+        
+        #menu-bar igar-hidden-setting {
+          align-self: end;
+        }
+        
+        #title-bar, #menu-title {
+          height: 80px;
+          font-weight: bold;
+        }
+        
+        #menu-title .menu-button {
+          left: 16px;
+          margin-right: 5px;
+        }
+        
+        #menu-list {
+          flex: 1 0 100px;
+          overflow-y: auto;
+        }
+        
+        #menu-list  {
+          --paper-item-min-height: 30px;
+        }
+        
+        .language-list {
+          align-self: center;
+        
+          --paper-listbox-color: --bright-text-color;
+          --paper-listbox-background-color: rgba(0,0,0,0);
+        }
+                      
+        app-toolbar#tabs-bar {
+          position: absolute;
+          bottom: 0;
+          width: 100vw;
+          height: 32px;
+          background: var(--menu-gradient)
+        }
+        
+        paper-tabs {
+          --paper-tabs-selection-bar-color: black;
+          height: 100%;
+        }
+        
+        paper-tab {
+          --paper-tab-ink: #aaa;
+          text-transform: uppercase;
+        }
+        
+        [hidden] {
+          display: none !important;
+        }
+      </style>
+  
+      <app-drawer-layout id="navmenu"  force-narrow>
+        <!-- Drawer content -->
+        <app-drawer id="drawer" slot="drawer" swipe-open="[[!wideLayout]]">         
+          <header id="menu-bar" class="main-header">
+            <div id="menu-title" top-item>
+                <!-- drawer toggle button -->
+              <paper-icon-button class="menu-button" icon="close" drawer-toggle></paper-icon-button>
+              <h1 main-title>${appInfo.title}</h1>
+            </div>
+            <igar-hidden-setting></igar-hidden-setting>
+          </header>
+    
+          <!-- Nav on mobile -->
+          <igar-list-menu id="menu-list" selected="{{route_selected}}" role="navigation"></igar-list-menu>
+          <igar-language-menu 
+              class="language-list" selected="{{lang_selected}}" opened="true"></igar-language-menu>
+        </app-drawer>
+  
+        <!-- Header content -->
+        <app-header-layout>
+          <app-header class="main-header" slot="header" condenses reveals 
+              effects="waterfall blend-background parallax-background">
+            <app-toolbar id="title-bar">
+              <paper-icon-button 
+                  class="menu-button" icon="menu" drawer-toggle hidden$="{{wideLayout}}"></paper-icon-button>
+              <h1 main-title>${appInfo.title}</h1>
+              
+              <igar-language-menu 
+                  class="language-list" selected="{{lang_selected}}" hidden$="{{!wideLayout}}">
+              </igar-language-menu>
+            </app-toolbar>
+                                
+            <!-- Nav on desktop. Needs toolbar for scroll effect (?) -->
+            <app-toolbar id="tabs-bar" hidden$="{{!wideLayout}}">
+              <igar-tabs-menu selected="{{route_selected}}" bottom-item role="navigation"></igar-tabs-menu>
+            </app-toolbar>
+          </app-header>
+        
+          <slot></slot>
+        
+        </app-header-layout>
+      </app-drawer-layout>
+    
+      <iron-media-query query="min-width: 640px" query-matches="{{wideLayout}}"></iron-media-query>
+      <sc-router id="router" route="{{route_selected}}"></sc-router>
+      <igar-localizer language="{{lang_selected}}"></igar-localizer>`
   }
 
   static get properties() {
@@ -221,7 +253,7 @@ class AppShell extends PolymerElement {
         type: String,
         notify: true,
         reflectToAttribute: true,
-        observer: '_observeMenuSelected'
+        observer: '_observeRouteSelected'
       },
       lang_selected: {
         type: String,
@@ -237,11 +269,9 @@ class AppShell extends PolymerElement {
 
   ready() {
     super.ready();
-
-    this.la
   }
 
-  _observeMenuSelected() {
+  _observeRouteSelected(newRoute, prevRoute) {
     this.$.drawer.close();
   }
 

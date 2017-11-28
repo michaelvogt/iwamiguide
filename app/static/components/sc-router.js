@@ -17,6 +17,9 @@
 
 import {Element as PolymerElement} from "/poly_modules/@polymer/polymer/polymer-element.js"
 
+const homePath = '/home/';
+const A04Path = '/404/';
+
 class SCRouter extends PolymerElement {
   constructor () {
     super();
@@ -29,7 +32,6 @@ class SCRouter extends PolymerElement {
     window.addEventListener('popstate', this._onChanged);
     this._clearRoutes();
     this._addRoutes();
-    this._onChanged();
   }
 
   disconnectedCallback () {
@@ -54,7 +56,7 @@ class SCRouter extends PolymerElement {
 
   static get observedAttributes() {return ['route']; }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
+  attributeChangedCallback( attr, oldValue, newValue) {
     switch (attr) {
       case 'route':
         this.go(newValue);
@@ -62,14 +64,14 @@ class SCRouter extends PolymerElement {
   }
 
   _onChanged () {
-    const path = window.location.pathname === '/' ? '/home/' : window.location.pathname;
-    const routes = Array.from(this._routes.keys());
-    const route = routes.find(r => r.test(path));
-    const data = route.exec(path);
+    const path = this._getCurrentPath();
 
+    let route = this._findRoute( path);
     if (!route) {
-      return;
+      route = A04Path;
     }
+
+    const data = route.exec( path);
 
     // Store the new view.
     this._nextView = this._routes.get(route);
@@ -133,12 +135,21 @@ class SCRouter extends PolymerElement {
     }, this);
   }
 
+  _findRoute( path) {
+    const routes = Array.from(this._routes.keys());
+    return routes.find( route => route.test(path));
+  }
+
   _removeRoute (route) {
     this._routes.delete(route);
   }
 
   _clearRoutes () {
     this._routes.clear();
+  }
+
+  _getCurrentPath() {
+    return window.location.pathname === '/' ? homePath : window.location.pathname;
   }
 }
 

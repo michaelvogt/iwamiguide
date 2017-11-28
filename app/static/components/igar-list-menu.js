@@ -46,6 +46,7 @@ class IgarListMenu extends PolymerElement {
           margin-left: 10px;
         }
       </style>
+      
       <paper-listbox selected="{{selected}}" attr-for-selected="route" role="menu">
         ${appMenu.map(item =>
           `<paper-item class="item" raised name="${item.name}" route="${item.route}" role="menuitem">
